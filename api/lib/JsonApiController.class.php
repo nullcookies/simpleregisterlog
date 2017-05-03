@@ -14,46 +14,8 @@ class JsonApiController extends agJsonApiController {
 	private $filter_response = false;
 	private $action_name = '';
 
-//	private function filterRequestLog($request){
-////		var_dump($request); exit;
-//		$request = @json_decode($request);
-//
-//		if (isset($request->request->action)){
-//			$this->action_name = $request->request->action;
-//
-//			if (in_array($this->action_name, $this->filter_response_actions))
-//				$this->filter_response = true;
-//			
-//			if (in_array($request->request->action, $this->filter_request_actions)){
-//				foreach ($this->forbidden_fields as $field){
-//					if (isset($request->request->params->$field))
-//						unset($request->request->params->$field);
-//				}
-//			}
-//		}
-//		
-//		$request = @json_encode($request);
-//		$this->context->getLogger()->setInput($request);
-//	}
-//
-//	private function filterResponseLog($response){
-//		if ($this->filter_response){
-//			//$response = @json_decode($response);
-//			if (is_array($response) && isset($response['data']) && in_array($this->action_name, $this->filter_response_actions)){
-//				foreach ($response['data'] as $key => $data){
-//					foreach ($this->forbidden_fields as $field){
-//						if (isset($response['data'][$key][$field]))
-//							unset($response['data'][$key][$field]);
-//					}
-//				}
-//			}
-//		}
-//		//$response = @json_encode($response);
-//		$this->context->getLogger()->setOutput($response);
-//	}
-
 	public function exec() {
-		try {
+		try {		
 			$this->user = $this->context->getUser();
 			$this->user->auth();
 			$this->getRequest();

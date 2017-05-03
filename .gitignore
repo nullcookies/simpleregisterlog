@@ -2,7 +2,7 @@
 /api/apigenerator/
 /api/config/
 /api/template/
-/apps/
+/apps/admin/config/
 /config/
 /lib/
 /templates/
