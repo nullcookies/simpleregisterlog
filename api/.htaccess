@@ -1,0 +1,28 @@
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule . json.php
+
+#Allow from all
+
+#ias net
+allow from 78.40.27.160/29
+
+#ias vpn
+allow from 10.10.40.0/24
+
+#IAS office
+allow from 176.74.9.174
+allow from 78.40.27.16/27
+allow from 95.143.120.10
+
+#TS
+allow from 192.168.8.6
+allow from 192.168.8.5
+allow from 213.152.137.113
+
+#client
+allow from 5.9.30.109
+#deny from all
