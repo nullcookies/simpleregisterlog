@@ -28,8 +28,11 @@ EOF
         $this->addColumn('patronymic', 'Отчество', 'string');
         $this->addColumn('msisdn', 'Телефон', 'string');
         $this->addColumn('email', 'Email', 'string');
-		$this->addColumn('question_id', 'ID Вопроса', 'integer');
-		$this->addColumn('answer_id', 'ID Ответа', 'integer');
+        $this->addColumn('question_id', 'ID Вопроса', 'integer');
+        $this->addColumn('question', 'Вопрос', 'string');
+        $this->addColumn('answer_id', 'ID Ответа', 'integer');
+        $this->addColumn('answer_order_num', 'Порядковый номер ответа', 'integer');
+        $this->addColumn('answer', 'Ответ', 'string');
         
         $this->withMemberShowFields();
         

@@ -23,8 +23,9 @@ class SaveToDbAction extends AbstractAction {
 		$this->addParameter('question_id', new agIntegerValidator(array('required' => false)), 'ID Вопроса');
 		
 		$this->addParameter('answer_id', new agIntegerValidator(array('required' => false)), 'ID ответа');
-               
-               
+
+        $this->addParameter('answer_order_num', new agIntegerValidator(array('required' => false)), 'Порядковый номер ответа');
+
         $this->registerActionException(Errors::SERVICE_NOT_FOUND, 'Сервис не найден');
 
         $this->dbHelper->addQuery($this->getAction().'/check_exist_service', '
@@ -40,7 +41,8 @@ class SaveToDbAction extends AbstractAction {
 				msisdn, 
 				email,
 				question_id,
-				answer_id
+				answer_id,
+				answer_order_num
 			) values (
 				:id_service, 
 				:name, 
@@ -49,7 +51,8 @@ class SaveToDbAction extends AbstractAction {
 				:msisdn, 
 				:email,
 				:question_id,
-				:answer_id
+				:answer_id,
+				:answer_order_num
 			)
         ');
     }
@@ -66,7 +69,8 @@ class SaveToDbAction extends AbstractAction {
                 'msisdn' => $this->getValue('msisdn'),
                 'email' => $this->getValue('email'),
 				'question_id' => $this->getValue('question_id'),
-				'answer_id' => $this->getValue('answer_id')
+				'answer_id' => $this->getValue('answer_id'),
+                'answer_order_num' => $this->getValue('answer_order_num')
             ));
 
             return array('result' => Errors::SUCCESS);
