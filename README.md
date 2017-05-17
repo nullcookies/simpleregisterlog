@@ -56,3 +56,20 @@ ca.crt  ca.csr  ca.key
 apshenichnikov@IAS-WS-UX02:/opt/ssl$ sudo mkdir /etc/apache2/ssl
 apshenichnikov@IAS-WS-UX02:/opt/ssl$ sudo cp ca.crt ca.key ca.csr /etc/apache2/ssl/
 
+<VirtualHost simpleregisterlog:443>
+	ServerName simpleregisterlog
+
+	ServerAdmin webmaster@localhost
+	DocumentRoot /home/apshenichnikov/NetBeansProjects/simpleregisterlog/web
+                SSLEngine on
+                SSLCertificateFile /etc/apache2/ssl/ca.crt
+                SSLCertificateKeyFile /etc/apache2/ssl/ca.key
+
+	<Directory /home/apshenichnikov/NetBeansProjects/simpleregisterlog/web>
+		AllowOverride All
+		Require all granted
+	</Directory>
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
