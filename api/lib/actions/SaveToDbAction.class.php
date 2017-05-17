@@ -19,10 +19,10 @@ class SaveToDbAction extends AbstractAction {
         $this->addParameter('surname', new agStringValidator(array('required' => false)), 'Фамилия');
         
         $this->addParameter('patronymic', new agStringValidator(array('required' => false)), 'Отчество');
-		
-		$this->addParameter('question_id', new agIntegerValidator(array('required' => false)), 'ID Вопроса');
-		
-		$this->addParameter('answer_id', new agIntegerValidator(array('required' => false)), 'ID ответа');
+
+        $this->addParameter('question_id', new agIntegerValidator(array('required' => false)), 'ID Вопроса');
+
+        $this->addParameter('answer_id', new agIntegerValidator(array('required' => false)), 'ID ответа');
 
         $this->addParameter('answer_order_num', new agIntegerValidator(array('required' => false)), 'Порядковый номер ответа');
 
@@ -34,26 +34,26 @@ class SaveToDbAction extends AbstractAction {
         
         $this->dbHelper->addQuery($this->getAction().'/save_to_db_log', '
             insert into `T_LOG` (
-				id_service, 
-				name, 
-				surname, 
-				patronymic, 
-				msisdn, 
-				email,
-				question_id,
-				answer_id,
-				answer_order_num
-			) values (
-				:id_service, 
-				:name, 
-				:surname, 
-				:patronymic, 
-				:msisdn, 
-				:email,
-				:question_id,
-				:answer_id,
-				:answer_order_num
-			)
+                id_service, 
+                name, 
+                surname, 
+                patronymic, 
+                msisdn, 
+                email,
+                question_id,
+                answer_id,
+                answer_order_num
+            ) values (
+                :id_service, 
+                :name, 
+                :surname, 
+                :patronymic, 
+                :msisdn, 
+                :email,
+                :question_id,
+                :answer_id,
+                :answer_order_num
+            )
         ');
     }
 
@@ -68,8 +68,8 @@ class SaveToDbAction extends AbstractAction {
                 'patronymic' => $this->getValue('patronymic'),
                 'msisdn' => $this->getValue('msisdn'),
                 'email' => $this->getValue('email'),
-				'question_id' => $this->getValue('question_id'),
-				'answer_id' => $this->getValue('answer_id'),
+                'question_id' => $this->getValue('question_id'),
+                'answer_id' => $this->getValue('answer_id'),
                 'answer_order_num' => $this->getValue('answer_order_num')
             ));
 
