@@ -34,6 +34,8 @@ class SaveToDbAction extends AbstractAction {
         
         $this->dbHelper->addQuery($this->getAction().'/save_to_db_log', '
             insert into `T_LOG` (
+                session_id,
+                net,
                 id_service, 
                 name, 
                 surname, 
@@ -44,6 +46,8 @@ class SaveToDbAction extends AbstractAction {
                 answer_id,
                 answer_order_num
             ) values (
+                :session_id,
+                :net,
                 :id_service, 
                 :name, 
                 :surname, 
@@ -62,6 +66,8 @@ class SaveToDbAction extends AbstractAction {
         
         if (!empty($id_service)) {            
             $result = $this->dbHelper->execute($this->getAction().'/save_to_db_log',  array(
+                'session_id' => session_id(),
+                'new' => $this->getIp(),
                 'id_service' => $this->getValue('id_service'),
                 'name' => $this->getValue('name'),
                 'surname' => $this->getValue('surname'),
