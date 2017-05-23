@@ -27,6 +27,30 @@ abstract class AbstractAction extends agAbstractAction {
         return $this->url_image.'obj='.$objType.'&id='.$id_file;
     }
 
+    public function getIp() {
+        $ipaddress = '';
+
+        if (isset($_SERVER['HTTP_CLIENT_IP']))
+            $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED']))
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+        else if(isset($_SERVER['HTTP_X_CLUSTER_CLIENT_IP']))
+            $ipaddress = $_SERVER['HTTP_X_CLUSTER_CLIENT_IP'];
+        else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+            $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_FORWARDED']))
+            $ipaddress = $_SERVER['HTTP_FORWARDED'];
+        else if(isset($_SERVER['REMOTE_ADDR']))
+            $ipaddress = $_SERVER['REMOTE_ADDR'];
+        else
+            $ipaddress = 'UNKNOWN';
+
+        return $ipaddress;
+    }
+
+
     public function init() {
         $this->dbHelper = $this->context->getDbHelper();
 
