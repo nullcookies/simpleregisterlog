@@ -44,8 +44,8 @@ abstract class AbstractAction extends agAbstractAction {
             $ipaddress = $_SERVER['HTTP_FORWARDED'];
         else if(isset($_SERVER['REMOTE_ADDR']))
             $ipaddress = $_SERVER['REMOTE_ADDR'];
-        else
-            $ipaddress = 'UNKNOWN';
+
+        $ipaddress = ip2long($ipaddress);
 
         return $ipaddress;
     }
