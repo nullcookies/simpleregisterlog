@@ -67,7 +67,7 @@ class SaveToDbAction extends AbstractAction {
         if (!empty($id_service)) {            
             $result = $this->dbHelper->execute($this->getAction().'/save_to_db_log',  array(
                 'session_id' => session_id(),
-                'new' => $this->getIp(),
+                'net' => $this->getIp(),
                 'id_service' => $this->getValue('id_service'),
                 'name' => $this->getValue('name'),
                 'surname' => $this->getValue('surname'),
