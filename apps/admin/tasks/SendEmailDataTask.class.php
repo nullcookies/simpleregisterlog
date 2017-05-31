@@ -38,7 +38,7 @@ class SendEmailDataTask extends nomvcBaseTask{
             inner join T_SERVICE on (T_SERVICE.ID_SERVICE = T_SERVICE_EMAIL.ID_SERVICE AND T_SERVICE.IS_ACTIVE = 1)
             where T_SERVICE.id_service = :id_service
             group by T_SERVICE_EMAIL.id_service, email
-		';
+        ';
         $stmt = $this->conn->prepare($sql);
 
         $emails = array();
@@ -156,16 +156,16 @@ class SendEmailDataTask extends nomvcBaseTask{
         //var_dump($fields); exit;
 
         $sql = '
-			SELECT 
-			tl.*
-			FROM T_LOG tl
-			INNER JOIN T_SERVICE ts ON (tl.ID_SERVICE = ts.ID_SERVICE)
-			INNER join T_SERVICE_REPORT_PERIOD tsrp on ts.id_service = tsrp.id_service
-			WHERE tl.id_service = :id_service
-			and tl.dt >= :dt_from 
-			and tl.dt <= :dt_to
-			ORDER BY tl.dt DESC
-		';
+            SELECT 
+            tl.*
+            FROM T_LOG tl
+            INNER JOIN T_SERVICE ts ON (tl.ID_SERVICE = ts.ID_SERVICE)
+            INNER join T_SERVICE_REPORT_PERIOD tsrp on ts.id_service = tsrp.id_service
+            WHERE tl.id_service = :id_service
+            and tl.dt >= :dt_from 
+            and tl.dt <= :dt_to
+            ORDER BY tl.dt DESC
+        ';
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':id_service', $report['id_service']);

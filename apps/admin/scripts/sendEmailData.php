@@ -1,5 +1,4 @@
 <?php
-
     $fl = fopen(substr(__FILE__, 0, strlen(__FILE__) - 4).'.lock', 'w+');
     if (!flock($fl, LOCK_EX + LOCK_NB)) { echo "locked!\r\n"; exit(); }
 
