@@ -1,6 +1,6 @@
 <?
 
-class htmlMimeMail {
+class HtmlMimeMail {
   var $headers;
   var $multipart;
   var $mime;
