@@ -153,7 +153,8 @@ class SaveToDbAction extends AbstractAction {
 
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $mail = new HtmlMimeMail();
-                $body = '';
+                $body = "\n".$prop['name'];
+                $body .= "\n";
 
                 foreach ($this->values as $key => $value) {
                     if (key_exists($key, $fields) && $value != null) {
