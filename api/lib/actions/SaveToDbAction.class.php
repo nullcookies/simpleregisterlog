@@ -103,7 +103,7 @@ class SaveToDbAction extends AbstractAction {
             $conn = $this->context->getDb();
 
             $sql = '
-                select ts.email_subject_def as email_subject, ts.email_from_def as email_from 
+                select ts.name, ts.email_subject_def as email_subject, ts.email_from_def as email_from 
                 from T_SERVICE ts
                 where ts.id_service = :id_service 
             ';
@@ -141,7 +141,7 @@ class SaveToDbAction extends AbstractAction {
                 $subject = $prop['email_subject'];
             }
             else
-                $subject = 'Получены новые данные';
+                $subject = 'Поступила новая заявка на ('.$prop['name'].'). Дата поступления '.date('Y-m-d H:i:s');
 
             $subject = mb_convert_encoding($subject, 'cp1251');
 
@@ -160,6 +160,8 @@ class SaveToDbAction extends AbstractAction {
                         $body .= "\n".$fields[$key] . ' : ' . $value;
                     }
                 }
+
+                $body = mb_convert_encoding($body, 'cp1251');
                 //var_dump($body); exit;
 
                 $mail->send(null, $row['email'], null, null, $from, $subject, $body);
