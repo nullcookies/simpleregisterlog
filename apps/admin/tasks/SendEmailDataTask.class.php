@@ -54,8 +54,6 @@ class SendEmailDataTask extends nomvcBaseTask{
         //var_dump($emails); exit;
 
         foreach ($reports as $report){
-            $file = $this->createReport($report);
-
             $subject = null;
             $def_subjects = array(
                 1	=>	'Еженедельный отчет',
@@ -64,11 +62,14 @@ class SendEmailDataTask extends nomvcBaseTask{
                 4	=>	'Ежедневный отчет'
             );
             if (!empty($report['email_subject'])){
-                $subject = $report['email_subject'];
+                $subject = $report['email_subject'].' по '.$report['name'].' за период с '.$report['dt_from'].' 00:00:00'.' по '.$report['dt_to'].' 00:00:00';
             }
             else {
                 $subject = $def_subjects[$report['id_period']];
             }
+
+            $report['email_subject'] = $subject;
+            $file = $this->createReport($report);
 
             $from = null;
             $def_from = 'info@be-interactive.ru';
@@ -125,7 +126,7 @@ class SendEmailDataTask extends nomvcBaseTask{
 
         $this->doc->setActiveSheet(0);
 
-        $file = $this->doc->write($report);
+        $file = $this->doc->write($report['email_subject'], $report);
 
         return 	$file;
     }
