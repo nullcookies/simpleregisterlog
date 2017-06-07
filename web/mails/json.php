@@ -18,7 +18,7 @@
 
 		$mail->send(
 			null, 
-			'a.pshenichnikov@be-interactive.ru', 
+			'a.pshenichnikov@be-interactive.ru;a.russkih@be-interactive.ru',
 			null, 
 			null, 
 			$from, 
