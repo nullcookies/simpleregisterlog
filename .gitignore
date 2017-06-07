@@ -15,3 +15,6 @@
 /web/img/
 .idea/
 *.lock
+
+/web/api/miratorg_proxy.php
+/web/data/
