@@ -13,6 +13,7 @@
 /web/fonts/
 /web/img/
 /web/data/reports/
+/backup/
 .idea/
 *.lock
 
