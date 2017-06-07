@@ -7,4 +7,10 @@
 /lib/
 /templates/
 /log/
+/web_bak/
+/web/assets/
+/web/css/
+/web/js/
+/web/fonts/
+/web/img/
 .idea/
