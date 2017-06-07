@@ -1,6 +1,6 @@
 <?php
-	define('API_GENERATOR_DIR', dirname(__DIR__).'/api/apigenerator');
-	require_once(dirname(__FILE__).'/lib/autoload.php');
+	define('API_GENERATOR_DIR', dirname(__DIR__).'/../api/apigenerator');
+	require_once(dirname(__FILE__).'/../../api/lib/autoload.php');
 
 	try {
 		$context = new ApiContext(agContext::ENV_PROD);
@@ -11,7 +11,7 @@
 		$from = 'info@be-interactive.ru';
 
 		$mail = new HtmlMimeMail();
-		$body = print_r($_POST);
+		$body = print_r($_POST, 1);
 
 		$body = mb_convert_encoding($body, 'cp1251');
 

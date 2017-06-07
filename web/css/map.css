@@ -1,0 +1,226 @@
+
+.map-control-panel {
+	width: 100%;
+	height: 68px;
+	background-color: rgba(35, 33, 38, 0.90);
+	padding: 2px;
+	padding-left: 10px;
+	position: fixed;
+}
+
+.heatmap-control {
+	width: 100%;
+	position: fixed;
+	background: initial;
+	border: none;
+}
+
+.heatmap-control .panel, .heatmap-control .panel-body {
+	background: initial;
+	border: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.map-control-panel .label {
+	display: inline-block;
+	font-weight: 700;
+	font-size: 14px;
+	text-align: left;
+	color: #bbc1ce;
+	margin-top: 13px;
+}
+
+.map-control-panel .btn-default {
+	height: 42px;
+	width: 42px;
+	border: 2px solid #fff;
+	border-radius: 9px;
+	background: initial;
+	margin-top: -15px;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin-right: 7px;
+}
+
+.map-control-panel .btn-default:hover {
+	border-color: #1de9b6;
+}
+
+.map-control-panel .btn-default:focus,
+.map-control-panel .btn-default:active,
+.map-control-panel .btn-default.active,
+.map-control-panel .open>.dropdown-toggle.btn-default {
+	background: #fff;
+}
+
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+	outline: none;
+}
+
+.map-control-panel .control-edit .btn-default {
+	border: none;
+}
+
+.map-control-panel .control-edit {
+	float: right;
+	margin-right: 20px;
+}
+
+
+.map {
+	height: 100%;
+	width: 100%;
+	margin: auto;
+	text-align: center;
+	overflow: hidden;
+}
+
+.info-panel {
+	position: absolute;
+	display: none;
+	border-radius: 15px;
+	border: 3px solid #7d7191;
+	min-width: 160px;
+	background: rgba(235, 229, 245, 0.85);
+	font-size: 14px;
+	padding: 18px;
+	text-align: left;
+}
+
+
+#view-beacon { background-image: url('/img/icons/control/show_beacon.png'); }
+#view-beacon:hover { background-image: url('/img/icons/control/show_beacon_mouseover.png'); }
+#view-beacon.active { background-image: url('/img/icons/control/show_beacon_selected.png'); }
+#view-beacon.active:hover {	background-image: url('/img/icons/control/show_beacon_selected_mouseover.png'); }
+
+#view-route { background-image: url('/img/icons/control/show_point.png'); }
+#view-route:hover { background-image: url('/img/icons/control/show_point_mouseover.png'); }
+#view-route.active { background-image: url('/img/icons/control/show_point_selected.png'); }
+#view-route.active:hover {	background-image: url('/img/icons/control/show_point_selected_mouseover.png'); }
+
+#get-route { background-image: url('/img/icons/control/show_route.png'); }
+#get-route:hover { background-image: url('/img/icons/control/show_route_mouseover.png'); }
+#get-route.active { background-image: url('/img/icons/control/show_route_selected.png'); }
+#get-route.active:hover {	background-image: url('/img/icons/control/show_route_selected_mouseover.png'); }
+
+#view-location { background-image: url('/img/icons/control/show_location.png'); }
+#view-location:hover { background-image: url('/img/icons/control/show_location_mouseover.png'); }
+#view-location.active { background-image: url('/img/icons/control/show_location_selected.png'); }
+#view-location.active:hover {	background-image: url('/img/icons/control/show_location_selected_mouseover.png'); }
+
+#view-heatmap { background-image: url('/img/icons/control/show_statistics.png'); }
+#view-heatmap:hover { background-image: url('/img/icons/control/show_statistics_mouseover.png'); }
+#view-heatmap.active { background-image: url('/img/icons/control/show_statistics_selected.png'); }
+#view-heatmap.active:hover {	background-image: url('/img/icons/control/show_statistics_selected_mouseover.png'); }
+
+#view-link-point { background-image: url('/img/icons/control/show_cross.png'); }
+#view-link-point:hover { background-image: url('/img/icons/control/show_cross_mouseover.png'); }
+#view-link-point.active { background-image: url('/img/icons/control/show_cross_selected.png'); }
+#view-link-point.active:hover {	background-image: url('/img/icons/control/show_cross_selected_mouseover.png'); }
+
+
+
+#add-beacon { background-image: url('/img/icons/control/add_beacon.png'); }
+#add-beacon:hover { background-image: url('/img/icons/control/add_beacon_mouseover.png'); }
+#add-beacon.active { background-image: url('/img/icons/control/add_beacon_selected.png'); }
+#add-beacon.active:hover {	background-image: url('/img/icons/control/add_beacon_selected_mouseover.png'); }
+
+#add-route { background-image: url('/img/icons/control/add_point.png'); }
+#add-route:hover { background-image: url('/img/icons/control/add_point_mouseover.png'); }
+#add-route.active { background-image: url('/img/icons/control/add_point_selected.png'); }
+#add-route.active:hover {	background-image: url('/img/icons/control/add_point_selected_mouseover.png'); }
+
+#add-location { background-image: url('/img/icons/control/add_location.png'); }
+#add-location:hover { background-image: url('/img/icons/control/add_location_mouseover.png'); }
+#add-location.active { background-image: url('/img/icons/control/add_location_selected.png'); }
+#add-location.active:hover {	background-image: url('/img/icons/control/add_location_selected_mouseover.png'); }
+
+#remove-route { background-image: url('/img/icons/control/add_delete.png'); }
+#remove-route:hover { background-image: url('/img/icons/control/add_delete_mouseover.png'); }
+#remove-route.active { background-image: url('/img/icons/control/add_delete_selected.png'); }
+#remove-route.active:hover {	background-image: url('/img/icons/control/add_delete_selected_mouseover.png'); }
+
+
+
+
+/**
+#view-beacon, #add-beacon {
+	background-image: url('/img/icons/tabbar_beacon.png');
+	background-position: center;
+	background-size: 20px;
+	background-repeat: no-repeat;
+}
+
+#view-beacon.active, #add-beacon.active {
+	background-image: url('/img/icons/tabbar_beacon_selected.png');
+}
+
+#view-route, #add-route {
+	background-image: url('/img/icons/tabbar_point.png');
+	background-position: center;
+	background-size: 20px;
+	background-repeat: no-repeat;
+}
+
+#view-route.active, #add-route.active {
+	background-image: url('/img/icons/tabbar_point_selected.png');
+}
+
+#view-link-point {
+	background-image: url('/img/icons/tapbar_link_point.png');
+	background-position: center;
+	background-size: 20px;
+	background-repeat: no-repeat;
+}
+
+#view-link-point.active {
+	background-image: url('/img/icons/tapbar_link_point_selected.png');
+}
+
+#view-location, #add-location {
+	background-image: url('/img/icons/tabbar_location.png');
+	background-position: center;
+	background-size: 20px;
+	background-repeat: no-repeat;
+}
+
+
+#view-location.active, #add-location.active {
+	background-image: url('/img/icons/tabbar_location_selected.png');
+}
+
+#remove-route {
+	background-image: url('/img/icons/tabbar_point_del.png');
+	background-position: center;
+	background-size: 20px;
+	background-repeat: no-repeat;
+}
+
+#remove-route.active {
+	background-image: url('/img/icons/tabbar_point_del_selected.png');
+}
+
+#get-route {
+	background-image: url('/img/icons/tabbar_route.png');
+	background-position: center;
+	background-size: 20px;
+	background-repeat: no-repeat;
+}
+
+#get-route.active {
+	background-image: url('/img/icons/tabbar_route_selected.png');
+}
+
+#view-heatmap {
+	background-image: url('/img/icons/tabbar_heatmap.png');
+	background-position: center;
+	background-size: 20px;
+	background-repeat: no-repeat;
+}
+
+#view-heatmap.active {
+	background-image: url('/img/icons/tabbar_heatmap_selected.png');
+}
+*/
