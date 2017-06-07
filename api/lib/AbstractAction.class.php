@@ -639,7 +639,8 @@ abstract class AbstractAction extends agAbstractAction {
      *
      * $params	входные параметры экшена
      */
-    public function validate($params) {
+    public function validate($params) 
+	{
         $values = array();
 
         $this->transferredParams = $params;

@@ -1,0 +1,12 @@
+RewriteEngine on
+
+#RewriteRule ^blank\.docx$ /doc/blank.docx$1 [NC,L]
+
+RewriteRule ^admin admin.php$1 [NC,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+DirectoryIndex json.php
+
+Allow from all
