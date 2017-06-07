@@ -6,6 +6,11 @@
  * and open the template in the editor.
  */
 
+define('NOMVC_APPNAME', 'admin');
+define('NOMVC_BASEDIR', dirname(dirname(dirname(dirname(__FILE__)))));
+
+require_once(NOMVC_BASEDIR.'/lib/autoload.php');
+
 $subject = 'Test ' . date('Y-m-d H:i:s');
 $subject = mb_convert_encoding($subject, 'cp1251');
 
