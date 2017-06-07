@@ -29,4 +29,6 @@ $mail->send(
 	$from, 
 	$subject, 
 	$body
-);	
+);
+
+echo "Оленька Кошечка!\r\n";
