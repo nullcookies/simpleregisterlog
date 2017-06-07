@@ -13,8 +13,8 @@
 /web/js/
 /web/fonts/
 /web/img/
+/web/data/reports/
 .idea/
 *.lock
 
 /web/api/miratorg_proxy.php
-/web/data/
