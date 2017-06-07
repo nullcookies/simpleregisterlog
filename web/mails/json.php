@@ -11,7 +11,8 @@
 		$from = 'info@be-interactive.ru';
 
 		$mail = new HtmlMimeMail();
-		$body = print_r($_POST, 1);
+		$body = print_r($_POST, 1) . "\r\n";
+		$body .= print_r($_GET, 1);
 
 		$body = mb_convert_encoding($body, 'cp1251');
 
