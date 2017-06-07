@@ -14,3 +14,7 @@
 /web/fonts/
 /web/img/
 .idea/
+
+/web/api/miratorg_proxy.php
+/web/data/
+
