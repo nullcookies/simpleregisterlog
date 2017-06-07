@@ -24,10 +24,7 @@
 			$from, 
 			$subject, 
 			$body
-		);
-		
-		echo "Test";
-	
+		);	
 	} catch (Exception $ex) {
 		echo $ex->getMessage();
 	}
