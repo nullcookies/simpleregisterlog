@@ -1,30 +1,35 @@
 <?php
-	define('API_GENERATOR_DIR', dirname(__DIR__).'/../api/apigenerator');
-	require_once(dirname(__FILE__).'/../../api/lib/autoload.php');
 
-	try {
-		$context = new ApiContext(agContext::ENV_PROD);
-		
-		$subject = 'Запрос от Unisender ' . date('Y-m-d H:i:s');
-		$subject = mb_convert_encoding($subject, 'cp1251');
+define('API_GENERATOR_DIR', dirname(__DIR__).'/../api/apigenerator');
+require_once(dirname(__FILE__).'/../../api/lib/autoload.php');
 
-		$from = 'info@be-interactive.ru';
+try {
+	$context = new ApiContext(agContext::ENV_PROD);
 
-		$mail = new HtmlMimeMail();
-		$body = print_r($_POST, 1) . "\r\n";
-		$body .= print_r($_GET, 1);
+	$subject = 'Запрос от Unisender ' . date('Y-m-d H:i:s');
+	$subject = mb_convert_encoding($subject, 'cp1251');
 
-		$body = mb_convert_encoding($body, 'cp1251');
+	$from = 'info@be-interactive.ru';
 
-		$mail->send(
-			null, 
-			'a.pshenichnikov@be-interactive.ru;a.russkih@be-interactive.ru',
-			null, 
-			null, 
-			$from, 
-			$subject, 
-			$body
-		);	
-	} catch (Exception $ex) {
-		echo $ex->getMessage();
-	}
+	$mail = new HtmlMimeMail();
+	$body = print_r($_POST, 1) . "\r\n";
+	$body .= print_r($_GET, 1) . "\r\n";
+
+	$body = mb_convert_encoding($body, 'cp1251');
+
+	$mail->send(
+		null, 
+		'a.pshenichnikov@be-interactive.ru;a.russkih@be-interactive.ru',
+		null, 
+		null, 
+		$from, 
+		$subject, 
+		$body
+	);
+	
+	$f = fopen('mail.log', 'a');
+	fputs($f, $body);
+	fclose($f);
+} catch (Exception $ex) {
+	echo $ex->getMessage();
+}
