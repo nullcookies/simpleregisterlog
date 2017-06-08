@@ -12,8 +12,11 @@ try {
 	$from = 'info@be-interactive.ru';
 
 	$mail = new HtmlMimeMail();
-	$body = print_r($_POST, 1) . "\r\n";
+	$body = "---------------------\r\n";
+	$body .= date_format(new DateTime(), 'Y-m-d H:i:s') . "\r\n";
+	$body .= print_r($_POST, 1) . "\r\n";
 	$body .= print_r($_GET, 1) . "\r\n";
+	$body .= "---------------------\r\n";
 
 	$body = mb_convert_encoding($body, 'cp1251');
 
@@ -30,6 +33,9 @@ try {
 	$f = fopen('mail.log', 'a');
 	fputs($f, $body);
 	fclose($f);
+	
+	echo $_GET['value'].  "\r\n";
+	echo "Done\r\n";
 } catch (Exception $ex) {
 	echo $ex->getMessage();
 }

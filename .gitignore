@@ -14,6 +14,7 @@
 /web/img/
 /web/data/reports/
 /backup/
+/web/mails/mail.log
 .idea/
 *.lock
 
