@@ -34,7 +34,7 @@ try {
 	fputs($f, $body);
 	fclose($f);
 	
-	echo $_GET['value'].  "\r\n";
+	//echo $_GET['value'].  "\r\n";
 	echo "Done\r\n";
 } catch (Exception $ex) {
 	echo $ex->getMessage();
