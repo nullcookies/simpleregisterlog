@@ -12,10 +12,22 @@ try {
 	$from = 'info@be-interactive.ru';
 
 	$mail = new HtmlMimeMail();
+	
+	
+	
 	$body = "---------------------\r\n";
 	$body .= date_format(new DateTime(), 'Y-m-d H:i:s') . "\r\n";
 	$body .= print_r($_POST, 1) . "\r\n";
 	$body .= print_r($_GET, 1) . "\r\n";
+	$body .= "Post data:\r\n";
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$fh = fopen('php://input', 'r');
+			$postData = '';
+			while ($line = fgets($fh)) {
+				$body .= $line;
+			}
+	}
+	
 	$body .= "---------------------\r\n";
 
 	$body = mb_convert_encoding($body, 'cp1251');
