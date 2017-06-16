@@ -280,7 +280,7 @@ class SaveToDbAction extends AbstractAction {
                 $this->autoEmailNotify();
             }
 
-            if ($this->getValue('id_service') == 20){
+            if ($this->getValue('id_service') == 18){
                 $top = $this->getTopStations();
                 return array('result' => Errors::SUCCESS, 'data' => $top);
             }
