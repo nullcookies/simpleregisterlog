@@ -56,6 +56,9 @@ class RootController extends nomvcBaseControllerTwo {
             case 'backend':
                 $controller = new BackendController($this->context, $this);
                 break;
+            case 'question':
+                $controller = new QuestionController($this->context, $this);
+                break;
             default:
                 $controller = new HTTPErrorController($this->context, $this);
                 $controller->setErrorCode(404);

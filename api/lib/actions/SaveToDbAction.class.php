@@ -26,6 +26,10 @@ class SaveToDbAction extends AbstractAction {
 
         $this->addParameter('answer_order_num', new agIntegerValidator(array('required' => false)), 'Порядковый номер ответа');
 
+        $this->addParameter('metro_line_id', new agIntegerValidator(array('required' => false)), 'ID линии метро');
+
+        $this->addParameter('metro_station_id', new agIntegerValidator(array('required' => false)), 'ID станции метро');
+
         $this->registerActionException(Errors::SERVICE_NOT_FOUND, 'Сервис не найден');
 
         $this->dbHelper->addQuery($this->getAction().'/check_exist_service', '
@@ -48,7 +52,9 @@ class SaveToDbAction extends AbstractAction {
                 email,
                 question_id,
                 answer_id,
-                answer_order_num
+                answer_order_num,
+                metro_line_id,
+                metro_station_id
             ) values (
                 :session_id,
                 :net,
@@ -60,7 +66,9 @@ class SaveToDbAction extends AbstractAction {
                 :email,
                 :question_id,
                 :answer_id,
-                :answer_order_num
+                :answer_order_num,
+                :metro_line_id,
+                :metro_station_id
             )
         ');
     }
@@ -82,7 +90,9 @@ class SaveToDbAction extends AbstractAction {
                 'email' => $this->getValue('email'),
                 'question_id' => $this->getValue('question_id'),
                 'answer_id' => $this->getValue('answer_id'),
-                'answer_order_num' => $this->getValue('answer_order_num')
+                'answer_order_num' => $this->getValue('answer_order_num'),
+                'metro_line_id' =>$this->getValue('metro_line_id'),
+                'metro_station_id' => $this->getValue('metro_station_id')
             ));
 
             //var_dump($has_auto_email_notify); exit;
