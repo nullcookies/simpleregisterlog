@@ -33,7 +33,13 @@ EOF
         $this->addColumn('answer_id', 'ID Ответа', 'integer');
         $this->addColumn('answer_order_num', 'Порядковый номер ответа', 'integer');
         $this->addColumn('answer', 'Ответ', 'string');
-        
+
+        $this->addColumn('metro_line_id', 'ID линии', 'integer');
+        $this->addColumn('metro_line', 'Нзвание линии', 'string');
+        $this->addColumn('metro_station_id', 'ID Станции', 'integer');
+        $this->addColumn('metro_station', 'Название станции', 'string');
+        $this->addColumn('metro_station_order_num', 'Порядковый номер станции', 'integer');
+
         $this->withMemberShowFields();
         
         $this->setFilterForm(new LogFilterForm($this->context));

@@ -3,7 +3,7 @@
 	require_once(dirname(__FILE__).'/../../api/lib/autoload.php');
 
 	try {
-        $context = new ApiContext(agContext::ENV_PROD);
+        $context = new ApiContext(agContext::ENV_DEBUG);
         $context->setUser(new agConfigUser($context));
 		$controller = new JsonApiController($context);
 		$context->setController($controller);
@@ -13,3 +13,5 @@
 	} catch (Exception $ex) {
 		echo $ex->getMessage();
 	}
+	
+?>
