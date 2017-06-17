@@ -316,7 +316,7 @@ class SaveToDbAction extends AbstractAction {
                     (@rownum1 := @rownum1 + 1) AS `METRO_STATION_ORDER_NUM`
                     from `simpleregisterlog`.`T_METRO_LINE` `ml`
                     join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum1 := 0) r
+                    join (SELECT @rownum1 := 1) r
                     where `ml`.`ID_METRO_LINE` = 1
             
                     union
@@ -329,7 +329,7 @@ class SaveToDbAction extends AbstractAction {
                     (@rownum2 := @rownum2 + 1) AS `METRO_STATION_ORDER_NUM`
                     from `simpleregisterlog`.`T_METRO_LINE` `ml`
                     join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum2 := 0) r
+                    join (SELECT @rownum2 := 1) r
                     where `ml`.`ID_METRO_LINE` = 2
             
                     union
@@ -342,7 +342,7 @@ class SaveToDbAction extends AbstractAction {
                     (@rownum3 := @rownum3 + 1) AS `METRO_STATION_ORDER_NUM`
                     from `simpleregisterlog`.`T_METRO_LINE` `ml`
                     join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum3 := 0) r
+                    join (SELECT @rownum3 := 1) r
                     where `ml`.`ID_METRO_LINE` = 3
             
                     union
@@ -355,7 +355,7 @@ class SaveToDbAction extends AbstractAction {
                     (@rownum4 := @rownum4 + 1) AS `METRO_STATION_ORDER_NUM`
                     from `simpleregisterlog`.`T_METRO_LINE` `ml`
                     join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum4 := 0) r
+                    join (SELECT @rownum4 := 1) r
                     where `ml`.`ID_METRO_LINE` = 4
             
                     union
@@ -368,7 +368,7 @@ class SaveToDbAction extends AbstractAction {
                     (@rownum5 := @rownum5 + 1) AS `METRO_STATION_ORDER_NUM`
                     from `simpleregisterlog`.`T_METRO_LINE` `ml`
                     join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum5 := 0) r
+                    join (SELECT @rownum5 := 1) r
                     where `ml`.`ID_METRO_LINE` = 5
             
                     union
@@ -381,7 +381,7 @@ class SaveToDbAction extends AbstractAction {
                     (@rownum6 := @rownum6 + 1) AS `METRO_STATION_ORDER_NUM`
                     from `simpleregisterlog`.`T_METRO_LINE` `ml`
                     join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum6 := 0) r
+                    join (SELECT @rownum6 := 1) r
                     where `ml`.`ID_METRO_LINE` = 6
             
                     union
@@ -394,7 +394,7 @@ class SaveToDbAction extends AbstractAction {
                     (@rownum7 := @rownum7 + 1) AS `METRO_STATION_ORDER_NUM`
                     from `simpleregisterlog`.`T_METRO_LINE` `ml`
                     join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum7 := 0) r
+                    join (SELECT @rownum7 := 1) r
                     where `ml`.`ID_METRO_LINE` = 7
             
                     union
@@ -407,7 +407,7 @@ class SaveToDbAction extends AbstractAction {
                     (@rownum8 := @rownum8 + 1) AS `METRO_STATION_ORDER_NUM`
                     from `simpleregisterlog`.`T_METRO_LINE` `ml`
                     join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum8 := 0) r
+                    join (SELECT @rownum8 := 1) r
                     where `ml`.`ID_METRO_LINE` = 8
             
                     union
@@ -420,7 +420,7 @@ class SaveToDbAction extends AbstractAction {
                     (@rownum9 := @rownum9 + 1) AS `METRO_STATION_ORDER_NUM`
                     from `simpleregisterlog`.`T_METRO_LINE` `ml`
                     join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum9 := 0) r
+                    join (SELECT @rownum9 := 1) r
                     where `ml`.`ID_METRO_LINE` = 9
             
                     union
@@ -433,7 +433,7 @@ class SaveToDbAction extends AbstractAction {
                     (@rownum10 := @rownum10 + 1) AS `METRO_STATION_ORDER_NUM`
                     from `simpleregisterlog`.`T_METRO_LINE` `ml`
                     join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum10 := 0) r
+                    join (SELECT @rownum10 := 1) r
                     where `ml`.`ID_METRO_LINE` = 10
             
                     union
@@ -446,7 +446,7 @@ class SaveToDbAction extends AbstractAction {
                     (@rownum11 := @rownum11 + 1) AS `METRO_STATION_ORDER_NUM`
                     from `simpleregisterlog`.`T_METRO_LINE` `ml`
                     join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum11 := 0) r
+                    join (SELECT @rownum11 := 1) r
                     where `ml`.`ID_METRO_LINE` = 11
             
                     union
@@ -459,7 +459,7 @@ class SaveToDbAction extends AbstractAction {
                     (@rownum12 := @rownum12 + 1) AS `METRO_STATION_ORDER_NUM`
                     from `simpleregisterlog`.`T_METRO_LINE` `ml`
                     join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum12 := 0) r
+                    join (SELECT @rownum12 := 1) r
                     where `ml`.`ID_METRO_LINE` = 12
             
                     order by `METRO_LINE_ID`, `METRO_STATION_ID`
