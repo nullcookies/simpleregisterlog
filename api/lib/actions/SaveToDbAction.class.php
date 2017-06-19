@@ -469,7 +469,8 @@ class SaveToDbAction extends AbstractAction {
                 ti.`METRO_LINE_ID`,
                 ti.`METRO_LINE`,
                 ti.`METRO_STATION_ID`,
-                ti.`METRO_STATION`  
+                ti.`METRO_STATION` 
+                order by count(*) desc
             ) t0
             limit 10
             ';
