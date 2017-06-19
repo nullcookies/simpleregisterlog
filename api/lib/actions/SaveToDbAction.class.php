@@ -293,7 +293,7 @@ class SaveToDbAction extends AbstractAction {
         return array('result' => Errors::FAIL);
     }
 
-    protected function  getTopStationS()
+    protected function  getTopStations()
     {
         $conn = $this->context->getDb();
 
