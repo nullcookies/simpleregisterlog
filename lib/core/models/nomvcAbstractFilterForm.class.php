@@ -103,7 +103,7 @@ abstract class nomvcAbstractFilterForm extends nomvcAbstractForm  {
 				} elseif ($validator instanceof nomvcIntegerValidator
 					|| $validator instanceof nomvcValueInDbValidator) {
 					if (isset($filters[$name]) && $filters[$name] !== null) {
-						$criteria->addWhere("{$name} = :{$name}", array($name => $filters[$name]));
+						$criteria->addWhere("{$name} like CONCAT('%', upper(:{$name}), '%')", array($name => $filters[$name]));
 					}
 				} elseif ($validator instanceof nomvcStringValidator) {
 					if (isset($filters[$name]) && $filters[$name] !== null) {

@@ -17,7 +17,7 @@ class nomvcIntegerValidator extends nomvcBaseValidator {
 		if ($this->addOption('required') == false && $value == null) {
 			return null;
 		}
-		
+	
 		if (!preg_match('/^\-?\d+$/', $value)) {
 			throw new nomvcInvalidValueException($value);
 		}

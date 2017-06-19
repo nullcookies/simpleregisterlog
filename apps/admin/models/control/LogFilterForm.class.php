@@ -8,26 +8,40 @@ class LogFilterForm extends nomvcAbstractFilterForm{
         $this->addWidget(new nomvcInputDatePeriodPickerWidget("Период отправки запроса", "dt"));
         $this->addValidator("dt", new nomvcDatePeriodValidator());
 
-        //$this->addWidget(new nomvcInputTextWidget('ID', 'id_log'));
-        //$this->addValidator('id_log', new nomvcIntegerValidator(array('required' => false)));
-        
-        //if ($this->context->getUser()->getAttribute('id_service') == null) {
-            $this->addWidget(new nomvcSelectFromMultipleDbWidget('Сервис', 'id_service', array(
-                'helper' => $this->context->getDbHelper(),
-                'table' => 'V_SERVICE',
-                'order' => 'name',
-                'required' => false,
-                'multiple' => true
-            )));
+        $this->addWidget(new nomvcSelectFromMultipleDbWidget('Сервис', 'id_service', array(
+            'helper' => $this->context->getDbHelper(),
+            'table' => 'V_SERVICE',
+            'order' => 'name',
+            'required' => false,
+            'multiple' => true
+        )));
 
-            $this->addValidator('id_service', new nomvcValueInDbMultipleValidator(array(
-                'required' => false,
-                "helper" => $this->context->getDbHelper(),
-                "table" => "V_SERVICE",
-                "key" => "id_service"
-            )));
-        //}
-        
+        $this->addValidator('id_service', new nomvcValueInDbMultipleValidator(array(
+            'required' => false,
+            "helper" => $this->context->getDbHelper(),
+            "table" => "V_SERVICE",
+            "key" => "id_service"
+        )));
+            
+        $this->addWidget(new nomvcInputTextWidget('Email id', 'mail_email_id'));
+        $this->addValidator('mail_email_id', new nomvcIntegerValidator(array('required' => false)));
+
+        $this->addWidget(new nomvcInputTextWidget('Название события', 'mail_event_name'));
+        $this->addValidator('mail_event_name', new nomvcStringValidator(array('required' => false)));
+
+        $this->addWidget(new nomvcInputDatePeriodPickerWidget("Время события", "mail_event_time"));
+        $this->addValidator("mail_event_time", new nomvcDatePeriodValidator());
+
+        $this->addWidget(new nomvcInputTextWidget("Email to", "mail_email"));
+        $this->addValidator("mail_email", new nomvcStringValidator());
+
+        $this->addWidget(new nomvcInputTextWidget("Статус отправки", "mail_status"));
+        $this->addValidator("mail_status", new nomvcStringValidator());
+
+        $this->addWidget(new nomvcInputTextWidget("Статус отправки группы", "mail_status_group"));
+        $this->addValidator("mail_status_group", new nomvcStringValidator());
+
+
         $this->addWidget(new nomvcInputTextWidget('Имя', 'name'));
         $this->addValidator('name', new nomvcStringValidator(array('required' => false)));
 

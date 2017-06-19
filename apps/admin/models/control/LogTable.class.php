@@ -40,6 +40,14 @@ EOF
         $this->addColumn('metro_station', 'Название станции', 'string');
         $this->addColumn('metro_station_order_num', 'Порядковый номер станции', 'integer');
 
+        $this->addColumn('mail_email_id', 'Email id', 'string');
+        $this->addColumn('mail_event_name', 'Название события', 'string');
+        $this->addColumn('mail_event_time', 'Время события', 'string');
+        $this->addColumn('mail_email', 'Email to', 'string');
+        $this->addColumn('mail_status', 'Статус отправки', 'string');
+        $this->addColumn('mail_status_group', 'Статус отправки группы', 'string');
+
+
         $this->withMemberShowFields();
         
         $this->setFilterForm(new LogFilterForm($this->context));
