@@ -78,7 +78,7 @@ class HtmlMimeMail {
     }
 
     function build_message($kod,$format='html') {
-        $boundary="=_".sha3(uniqid(time()));
+        $boundary="=_".md5(uniqid(time()));
         $this->headers.="MIME-Version: 1.0\n";
         $this->headers.="Content-Type: multipart/mixed; boundary=\"$boundary\"\n";
         $this->multipart="";

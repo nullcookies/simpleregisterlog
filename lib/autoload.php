@@ -32,7 +32,8 @@
             ),
             "{$basedir}/tools/" => array(
                 'CsvReader',
-                'mail'
+                'mail',
+                ''
             )
         );
         

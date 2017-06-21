@@ -140,7 +140,7 @@ class HtmlMimeMail {
 
     function send($server, $to, $cc, $bcc, $from, $subject="", $headers="") {
         $this->configure_server($server);
-        $this->send_ex($to, $cc, $bcc, $from, $subject, $headers);
+        return $this->send_ex($to, $cc, $bcc, $from, $subject, $headers);
     }
 
     function send_ex($to, $cc, $bcc, $from, $subject="", $headers="") {
