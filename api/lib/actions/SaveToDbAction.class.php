@@ -9,15 +9,15 @@ class SaveToDbAction extends AbstractAction {
         parent::init();
 
         $this->addParameter('id_service', new agStringValidator(array('required' => true)), 'ID Service');
-        
+
         $this->addParameter('msisdn', new agMsisdnValidator(array('required' => false)), 'Номер телефона');
 
         $this->addParameter('email', new agEmailValidator(array('required' => false)), 'Email');
-        
+
         $this->addParameter('name', new agStringValidator(array('required' => false)), 'Имя');
 
         $this->addParameter('surname', new agStringValidator(array('required' => false)), 'Фамилия');
-        
+
         $this->addParameter('patronymic', new agStringValidator(array('required' => false)), 'Отчество');
 
         $this->addParameter('question_id', new agIntegerValidator(array('required' => false)), 'ID Вопроса');
@@ -42,171 +42,199 @@ class SaveToDbAction extends AbstractAction {
             select count(*) as cnt from T_SERVICE where id_service = :id_service and is_active = 1 and is_auto_email_notify = 1
         ');
 
-        $this->dbHelper->addQuery($this->getAction().'/select_station_line_and_by_order_num', '
+        $this->sql_body = '
+            select 
+            `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
+            `ml`.`NAME` AS `METRO_LINE`,
+            `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
+            `tmt`.`NAME` AS `METRO_STATION`,
+            (@rownum1 := @rownum1 + 1) AS `METRO_STATION_ORDER_NUM`,
+            `tmt`.`POSITION_X` AS `POSITION_X`,
+            `tmt`.`POSITION_Y` AS `POSITION_Y`
+            from `T_METRO_LINE` `ml`
+            join `T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
+            join (SELECT @rownum1 := 0) r
+            where `ml`.`ID_METRO_LINE` = 1
+            
+            union
+            
+            select 
+            `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
+            `ml`.`NAME` AS `METRO_LINE`,
+            `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
+            `tmt`.`NAME` AS `METRO_STATION`,
+            (@rownum2 := @rownum2 + 1) AS `METRO_STATION_ORDER_NUM`,
+            `tmt`.`POSITION_X` AS `POSITION_X`,
+            `tmt`.`POSITION_Y` AS `POSITION_Y`
+            from `T_METRO_LINE` `ml`
+            join `T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
+            join (SELECT @rownum2 := 0) r
+            where `ml`.`ID_METRO_LINE` = 2
+            
+            union
+            
+            select 
+            `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
+            `ml`.`NAME` AS `METRO_LINE`,
+            `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
+            `tmt`.`NAME` AS `METRO_STATION`,
+            (@rownum3 := @rownum3 + 1) AS `METRO_STATION_ORDER_NUM`,
+            `tmt`.`POSITION_X` AS `POSITION_X`,
+            `tmt`.`POSITION_Y` AS `POSITION_Y`
+            from `T_METRO_LINE` `ml`
+            join `T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
+            join (SELECT @rownum3 := 0) r
+            where `ml`.`ID_METRO_LINE` = 3
+            
+            union
+            
+            select 
+            `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
+            `ml`.`NAME` AS `METRO_LINE`,
+            `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
+            `tmt`.`NAME` AS `METRO_STATION`,
+            (@rownum4 := @rownum4 + 1) AS `METRO_STATION_ORDER_NUM`,
+            `tmt`.`POSITION_X` AS `POSITION_X`,
+            `tmt`.`POSITION_Y` AS `POSITION_Y`
+            from `T_METRO_LINE` `ml`
+            join `T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
+            join (SELECT @rownum4 := 0) r
+            where `ml`.`ID_METRO_LINE` = 4
+            
+            union
+            
+            select 
+            `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
+            `ml`.`NAME` AS `METRO_LINE`,
+            `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
+            `tmt`.`NAME` AS `METRO_STATION`,
+            (@rownum5 := @rownum5 + 1) AS `METRO_STATION_ORDER_NUM`,
+            `tmt`.`POSITION_X` AS `POSITION_X`,
+            `tmt`.`POSITION_Y` AS `POSITION_Y`
+            from `T_METRO_LINE` `ml`
+            join `T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
+            join (SELECT @rownum5 := 0) r
+            where `ml`.`ID_METRO_LINE` = 5
+            
+            union
+            
+            select 
+            `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
+            `ml`.`NAME` AS `METRO_LINE`,
+            `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
+            `tmt`.`NAME` AS `METRO_STATION`,
+            (@rownum6 := @rownum6 + 1) AS `METRO_STATION_ORDER_NUM`,
+            `tmt`.`POSITION_X` AS `POSITION_X`,
+            `tmt`.`POSITION_Y` AS `POSITION_Y`
+            from `T_METRO_LINE` `ml`
+            join `T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
+            join (SELECT @rownum6 := 0) r
+            where `ml`.`ID_METRO_LINE` = 6
+            
+            union
+            
+            select 
+            `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
+            `ml`.`NAME` AS `METRO_LINE`,
+            `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
+            `tmt`.`NAME` AS `METRO_STATION`,
+            (@rownum7 := @rownum7 + 1) AS `METRO_STATION_ORDER_NUM`,
+            `tmt`.`POSITION_X` AS `POSITION_X`,
+            `tmt`.`POSITION_Y` AS `POSITION_Y`
+            from `T_METRO_LINE` `ml`
+            join `T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
+            join (SELECT @rownum7 := 0) r
+            where `ml`.`ID_METRO_LINE` = 7
+            
+            union
+            
+            select 
+            `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
+            `ml`.`NAME` AS `METRO_LINE`,
+            `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
+            `tmt`.`NAME` AS `METRO_STATION`,
+            (@rownum8 := @rownum8 + 1) AS `METRO_STATION_ORDER_NUM`,
+            `tmt`.`POSITION_X` AS `POSITION_X`,
+            `tmt`.`POSITION_Y` AS `POSITION_Y`
+            from `T_METRO_LINE` `ml`
+            join `T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
+            join (SELECT @rownum8 := 0) r
+            where `ml`.`ID_METRO_LINE` = 8
+            
+            union
+            
+            select 
+            `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
+            `ml`.`NAME` AS `METRO_LINE`,
+            `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
+            `tmt`.`NAME` AS `METRO_STATION`,
+            (@rownum9 := @rownum9 + 1) AS `METRO_STATION_ORDER_NUM`,
+            `tmt`.`POSITION_X` AS `POSITION_X`,
+            `tmt`.`POSITION_Y` AS `POSITION_Y`
+            from `T_METRO_LINE` `ml`
+            join `T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
+            join (SELECT @rownum9 := 0) r
+            where `ml`.`ID_METRO_LINE` = 9
+            
+            union
+            
+            select 
+            `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
+            `ml`.`NAME` AS `METRO_LINE`,
+            `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
+            `tmt`.`NAME` AS `METRO_STATION`,
+            (@rownum10 := @rownum10 + 1) AS `METRO_STATION_ORDER_NUM`,
+            `tmt`.`POSITION_X` AS `POSITION_X`,
+            `tmt`.`POSITION_Y` AS `POSITION_Y`
+            from `T_METRO_LINE` `ml`
+            join `T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
+            join (SELECT @rownum10 := 0) r
+            where `ml`.`ID_METRO_LINE` = 10
+            
+            union
+            
+            select 
+            `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
+            `ml`.`NAME` AS `METRO_LINE`,
+            `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
+            `tmt`.`NAME` AS `METRO_STATION`,
+            (@rownum11 := @rownum11 + 1) AS `METRO_STATION_ORDER_NUM`,
+            `tmt`.`POSITION_X` AS `POSITION_X`,
+            `tmt`.`POSITION_Y` AS `POSITION_Y`
+            from `T_METRO_LINE` `ml`
+            join `T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
+            join (SELECT @rownum11 := 0) r
+            where `ml`.`ID_METRO_LINE` = 11
+            
+            union
+            
+            select 
+            `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
+            `ml`.`NAME` AS `METRO_LINE`,
+            `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
+            `tmt`.`NAME` AS `METRO_STATION`,
+            (@rownum12 := @rownum12 + 1) AS `METRO_STATION_ORDER_NUM`,
+            `tmt`.`POSITION_X` AS `POSITION_X`,
+            `tmt`.`POSITION_Y` AS `POSITION_Y`
+            from `T_METRO_LINE` `ml`
+            join `T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
+            join (SELECT @rownum12 := 0) r
+            where `ml`.`ID_METRO_LINE` = 12
+            
+            order by `METRO_LINE_ID`, `METRO_STATION_ID`
+        ';
+
+        $this->dbHelper->addQuery($this->getAction().'/select_station_line_and_by_order_num', "
             select *
             from
             (
-                select 
-                `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                `ml`.`NAME` AS `METRO_LINE`,
-                `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                `tmt`.`NAME` AS `METRO_STATION`,
-                (@rownum1 := @rownum1 + 1) AS `METRO_STATION_ORDER_NUM`
-                from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                join (SELECT @rownum1 := 0) r
-                where `ml`.`ID_METRO_LINE` = 1
-                
-                union
-                
-                select 
-                `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                `ml`.`NAME` AS `METRO_LINE`,
-                `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                `tmt`.`NAME` AS `METRO_STATION`,
-                (@rownum2 := @rownum2 + 1) AS `METRO_STATION_ORDER_NUM`
-                from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                join (SELECT @rownum2 := 0) r
-                where `ml`.`ID_METRO_LINE` = 2
-                
-                union
-                
-                select 
-                `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                `ml`.`NAME` AS `METRO_LINE`,
-                `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                `tmt`.`NAME` AS `METRO_STATION`,
-                (@rownum3 := @rownum3 + 1) AS `METRO_STATION_ORDER_NUM`
-                from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                join (SELECT @rownum3 := 0) r
-                where `ml`.`ID_METRO_LINE` = 3
-                
-                union
-                
-                select 
-                `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                `ml`.`NAME` AS `METRO_LINE`,
-                `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                `tmt`.`NAME` AS `METRO_STATION`,
-                (@rownum4 := @rownum4 + 1) AS `METRO_STATION_ORDER_NUM`
-                from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                join (SELECT @rownum4 := 0) r
-                where `ml`.`ID_METRO_LINE` = 4
-                
-                union
-                
-                select 
-                `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                `ml`.`NAME` AS `METRO_LINE`,
-                `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                `tmt`.`NAME` AS `METRO_STATION`,
-                (@rownum5 := @rownum5 + 1) AS `METRO_STATION_ORDER_NUM`
-                from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                join (SELECT @rownum5 := 0) r
-                where `ml`.`ID_METRO_LINE` = 5
-                
-                union
-                
-                select 
-                `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                `ml`.`NAME` AS `METRO_LINE`,
-                `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                `tmt`.`NAME` AS `METRO_STATION`,
-                (@rownum6 := @rownum6 + 1) AS `METRO_STATION_ORDER_NUM`
-                from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                join (SELECT @rownum6 := 0) r
-                where `ml`.`ID_METRO_LINE` = 6
-                
-                union
-                
-                select 
-                `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                `ml`.`NAME` AS `METRO_LINE`,
-                `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                `tmt`.`NAME` AS `METRO_STATION`,
-                (@rownum7 := @rownum7 + 1) AS `METRO_STATION_ORDER_NUM`
-                from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                join (SELECT @rownum7 := 0) r
-                where `ml`.`ID_METRO_LINE` = 7
-                
-                union
-                
-                select 
-                `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                `ml`.`NAME` AS `METRO_LINE`,
-                `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                `tmt`.`NAME` AS `METRO_STATION`,
-                (@rownum8 := @rownum8 + 1) AS `METRO_STATION_ORDER_NUM`
-                from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                join (SELECT @rownum8 := 0) r
-                where `ml`.`ID_METRO_LINE` = 8
-                
-                union
-                
-                select 
-                `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                `ml`.`NAME` AS `METRO_LINE`,
-                `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                `tmt`.`NAME` AS `METRO_STATION`,
-                (@rownum9 := @rownum9 + 1) AS `METRO_STATION_ORDER_NUM`
-                from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                join (SELECT @rownum9 := 0) r
-                where `ml`.`ID_METRO_LINE` = 9
-                
-                union
-                
-                select 
-                `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                `ml`.`NAME` AS `METRO_LINE`,
-                `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                `tmt`.`NAME` AS `METRO_STATION`,
-                (@rownum10 := @rownum10 + 1) AS `METRO_STATION_ORDER_NUM`
-                from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                join (SELECT @rownum10 := 0) r
-                where `ml`.`ID_METRO_LINE` = 10
-                
-                union
-                
-                select 
-                `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                `ml`.`NAME` AS `METRO_LINE`,
-                `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                `tmt`.`NAME` AS `METRO_STATION`,
-                (@rownum11 := @rownum11 + 1) AS `METRO_STATION_ORDER_NUM`
-                from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                join (SELECT @rownum11 := 0) r
-                where `ml`.`ID_METRO_LINE` = 11
-                
-                union
-                
-                select 
-                `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                `ml`.`NAME` AS `METRO_LINE`,
-                `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                `tmt`.`NAME` AS `METRO_STATION`,
-                (@rownum12 := @rownum12 + 1) AS `METRO_STATION_ORDER_NUM`
-                from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                join (SELECT @rownum12 := 0) r
-                where `ml`.`ID_METRO_LINE` = 12
-                
-                order by `METRO_LINE_ID`, `METRO_STATION_ID`
+                $this->sql_body
             ) ts
             where metro_line_id = :id_metro_line
             and metro_station_order_num = :metro_station_order_num
             limit 1
-        ');
-        
+        ");
+
         $this->dbHelper->addQuery($this->getAction().'/save_to_db_log', '
             insert into `T_LOG` (
                 session_id,
@@ -248,13 +276,11 @@ class SaveToDbAction extends AbstractAction {
         $has_auto_email_notify = $this->dbHelper->selectValue($this->getAction().'/check_auto_email_notify',  array('id_service' => $this->getValue('id_service')));
 
         if (!empty($has_service)) {
-
             $row = $this->dbHelper->selectRow($this->getAction().'/select_station_line_and_by_order_num', array(
                 'id_metro_line' => $this->getValue('metro_line_id'),
                 'metro_station_order_num' => $this->getValue('metro_station_order_num')
             ));
 
-            ///var_dump($row); exit;
             if (isset($row['metro_station_id']))
                 $this->setValue('metro_station_id', $row['metro_station_id']);
 
@@ -293,11 +319,11 @@ class SaveToDbAction extends AbstractAction {
         return array('result' => Errors::FAIL);
     }
 
-    protected function  getTopStations()
+    protected function getTopStations()
     {
         $conn = $this->context->getDb();
 
-        $sql = '
+        $sql = "
             SELECT *
             FROM (
                 select
@@ -305,175 +331,27 @@ class SaveToDbAction extends AbstractAction {
                 ti.`METRO_LINE`,
                 ti.`METRO_STATION_ID`,
                 ti.`METRO_STATION`,
+                ti.`METRO_STATION_ORDER_NUM`,
+                ti.`POSITION_X`,
+                ti.`POSITION_Y`,
                 count(*) as CNT
                 from `T_LOG` tl
                 inner join (
-                    select 
-                    `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                    `ml`.`NAME` AS `METRO_LINE`,
-                    `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                    `tmt`.`NAME` AS `METRO_STATION`,
-                    (@rownum1 := @rownum1 + 1) AS `METRO_STATION_ORDER_NUM`
-                    from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                    join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum1 := 1) r
-                    where `ml`.`ID_METRO_LINE` = 1
-            
-                    union
-            
-                    select 
-                    `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                    `ml`.`NAME` AS `METRO_LINE`,
-                    `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                    `tmt`.`NAME` AS `METRO_STATION`,
-                    (@rownum2 := @rownum2 + 1) AS `METRO_STATION_ORDER_NUM`
-                    from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                    join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum2 := 1) r
-                    where `ml`.`ID_METRO_LINE` = 2
-            
-                    union
-            
-                    select 
-                    `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                    `ml`.`NAME` AS `METRO_LINE`,
-                    `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                    `tmt`.`NAME` AS `METRO_STATION`,
-                    (@rownum3 := @rownum3 + 1) AS `METRO_STATION_ORDER_NUM`
-                    from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                    join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum3 := 1) r
-                    where `ml`.`ID_METRO_LINE` = 3
-            
-                    union
-            
-                    select 
-                    `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                    `ml`.`NAME` AS `METRO_LINE`,
-                    `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                    `tmt`.`NAME` AS `METRO_STATION`,
-                    (@rownum4 := @rownum4 + 1) AS `METRO_STATION_ORDER_NUM`
-                    from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                    join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum4 := 1) r
-                    where `ml`.`ID_METRO_LINE` = 4
-            
-                    union
-            
-                    select 
-                    `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                    `ml`.`NAME` AS `METRO_LINE`,
-                    `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                    `tmt`.`NAME` AS `METRO_STATION`,
-                    (@rownum5 := @rownum5 + 1) AS `METRO_STATION_ORDER_NUM`
-                    from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                    join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum5 := 1) r
-                    where `ml`.`ID_METRO_LINE` = 5
-            
-                    union
-            
-                    select 
-                    `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                    `ml`.`NAME` AS `METRO_LINE`,
-                    `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                    `tmt`.`NAME` AS `METRO_STATION`,
-                    (@rownum6 := @rownum6 + 1) AS `METRO_STATION_ORDER_NUM`
-                    from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                    join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum6 := 1) r
-                    where `ml`.`ID_METRO_LINE` = 6
-            
-                    union
-            
-                    select 
-                    `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                    `ml`.`NAME` AS `METRO_LINE`,
-                    `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                    `tmt`.`NAME` AS `METRO_STATION`,
-                    (@rownum7 := @rownum7 + 1) AS `METRO_STATION_ORDER_NUM`
-                    from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                    join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum7 := 1) r
-                    where `ml`.`ID_METRO_LINE` = 7
-            
-                    union
-            
-                    select 
-                    `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                    `ml`.`NAME` AS `METRO_LINE`,
-                    `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                    `tmt`.`NAME` AS `METRO_STATION`,
-                    (@rownum8 := @rownum8 + 1) AS `METRO_STATION_ORDER_NUM`
-                    from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                    join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum8 := 1) r
-                    where `ml`.`ID_METRO_LINE` = 8
-            
-                    union
-            
-                    select 
-                    `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                    `ml`.`NAME` AS `METRO_LINE`,
-                    `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                    `tmt`.`NAME` AS `METRO_STATION`,
-                    (@rownum9 := @rownum9 + 1) AS `METRO_STATION_ORDER_NUM`
-                    from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                    join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum9 := 1) r
-                    where `ml`.`ID_METRO_LINE` = 9
-            
-                    union
-            
-                    select 
-                    `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                    `ml`.`NAME` AS `METRO_LINE`,
-                    `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                    `tmt`.`NAME` AS `METRO_STATION`,
-                    (@rownum10 := @rownum10 + 1) AS `METRO_STATION_ORDER_NUM`
-                    from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                    join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum10 := 1) r
-                    where `ml`.`ID_METRO_LINE` = 10
-            
-                    union
-            
-                    select 
-                    `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                    `ml`.`NAME` AS `METRO_LINE`,
-                    `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                    `tmt`.`NAME` AS `METRO_STATION`,
-                    (@rownum11 := @rownum11 + 1) AS `METRO_STATION_ORDER_NUM`
-                    from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                    join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum11 := 1) r
-                    where `ml`.`ID_METRO_LINE` = 11
-            
-                    union
-            
-                    select 
-                    `ml`.`ID_METRO_LINE` AS `METRO_LINE_ID`,
-                    `ml`.`NAME` AS `METRO_LINE`,
-                    `tmt`.`ID_METRO_STATION` AS `METRO_STATION_ID`,
-                    `tmt`.`NAME` AS `METRO_STATION`,
-                    (@rownum12 := @rownum12 + 1) AS `METRO_STATION_ORDER_NUM`
-                    from `simpleregisterlog`.`T_METRO_LINE` `ml`
-                    join `simpleregisterlog`.`T_METRO_STATION` `tmt` on `ml`.`ID_METRO_LINE` = `tmt`.`ID_METRO_LINE` 
-                    join (SELECT @rownum12 := 1) r
-                    where `ml`.`ID_METRO_LINE` = 12
-            
-                    order by `METRO_LINE_ID`, `METRO_STATION_ID`
+                    $this->sql_body  
                 ) ti on tl.`id_metro_line` = ti.`METRO_LINE_ID` and tl.`id_metro_station` = ti.`metro_station_id`
                 where tl.`id_service` = :id_service
                 group by 
                 ti.`METRO_LINE_ID`,
                 ti.`METRO_LINE`,
                 ti.`METRO_STATION_ID`,
-                ti.`METRO_STATION` 
+                ti.`METRO_STATION`,
+                ti.`METRO_STATION_ORDER_NUM`,
+                ti.`POSITION_X`,
+                ti.`POSITION_Y`
                 order by count(*) desc
             ) t0
             limit 10
-            ';
+            ";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':id_service', $this->getValue('id_service'), PDO::PARAM_INT);
         $stmt->execute();
