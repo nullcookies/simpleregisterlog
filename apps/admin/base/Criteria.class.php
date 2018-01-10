@@ -2,4 +2,5 @@
 
 class Criteria extends nomvcCriteria {
 
+
 }

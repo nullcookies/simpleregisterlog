@@ -28,6 +28,7 @@
                 'yaml',
                 'xls',
                 'mailer/PHPMailer',
+                'mailer/PHPMailer6/src',
                 'spore/PHPSpore/lib',
             ),
             "{$basedir}/tools/" => array(

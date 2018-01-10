@@ -60,7 +60,7 @@ abstract class nomvcDbHelper {
      * @param array		$params		Массив параметров
      * @param array		$lobs		Массив LOB-ов
      */
-    public function select($query_code, $values = array(), $params = array(), $lobs = array()) {
+    public function select($query_code, $values = array(), $params = array(), $lobs = array()) {	    
         $stmt = $this->getStmt($query_code);
         $this->bindValues($stmt, $values);
         $this->bindParams($stmt, $params);

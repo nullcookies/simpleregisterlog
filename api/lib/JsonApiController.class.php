@@ -15,7 +15,13 @@ class JsonApiController extends agJsonApiController {
 	private $action_name = '';
 
 	public function exec() {
-		try {		
+		try {
+		    /*
+		    if ($_SERVER['REQUEST_METHOD']=='OPTIONS'){
+	            throw new Exception('Bad method');
+	        }
+	        */
+	        
 			$this->user = $this->context->getUser();
 			$this->user->auth();
 			$this->getRequest();

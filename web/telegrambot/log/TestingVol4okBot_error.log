@@ -1,0 +1,20 @@
+[2017-08-28 10:55:00] bot_log.ERROR: exception 'Longman\TelegramBot\Exception\TelegramException' with message 'Input is empty!' in /srv/www/simpleregisterlog/web/telegrambot/vendor/longman/telegram-bot/src/Telegram.php:382
+Stack trace:
+#0 /srv/www/simpleregisterlog/web/telegrambot/index.php(75): Longman\TelegramBot\Telegram->handle()
+#1 {main} [] []
+[2017-08-28 11:23:20] bot_log.ERROR: exception 'Longman\TelegramBot\Exception\TelegramException' with message 'Input is empty!' in /srv/www/simpleregisterlog/web/telegrambot/vendor/longman/telegram-bot/src/Telegram.php:382
+Stack trace:
+#0 /srv/www/simpleregisterlog/web/telegrambot/index.php(75): Longman\TelegramBot\Telegram->handle()
+#1 {main} [] []
+[2017-08-28 11:23:25] bot_log.ERROR: exception 'Longman\TelegramBot\Exception\TelegramException' with message 'Duplicate update received!' in /srv/www/simpleregisterlog/web/telegrambot/vendor/longman/telegram-bot/src/DB.php:495
+Stack trace:
+#0 /srv/www/simpleregisterlog/web/telegrambot/vendor/longman/telegram-bot/src/Telegram.php(460): Longman\TelegramBot\DB::insertRequest(Object(Longman\TelegramBot\Entities\Update))
+#1 /srv/www/simpleregisterlog/web/telegrambot/vendor/longman/telegram-bot/src/Telegram.php(390): Longman\TelegramBot\Telegram->processUpdate(Object(Longman\TelegramBot\Entities\Update))
+#2 /srv/www/simpleregisterlog/web/telegrambot/index.php(75): Longman\TelegramBot\Telegram->handle()
+#3 {main} [] []
+[2017-08-28 15:40:24] bot_log.ERROR: exception 'Longman\TelegramBot\Exception\TelegramException' with message 'Duplicate update received!' in /srv/www/simpleregisterlog/web/telegrambot/vendor/longman/telegram-bot/src/DB.php:495
+Stack trace:
+#0 /srv/www/simpleregisterlog/web/telegrambot/vendor/longman/telegram-bot/src/Telegram.php(463): Longman\TelegramBot\DB::insertRequest(Object(Longman\TelegramBot\Entities\Update))
+#1 /srv/www/simpleregisterlog/web/telegrambot/vendor/longman/telegram-bot/src/Telegram.php(393): Longman\TelegramBot\Telegram->processUpdate(Object(Longman\TelegramBot\Entities\Update))
+#2 /srv/www/simpleregisterlog/web/telegrambot/index.php(75): Longman\TelegramBot\Telegram->handle()
+#3 {main} [] []

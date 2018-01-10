@@ -24,9 +24,10 @@ class nomvcBaseControllerTwo extends nomvcBaseController{
         //$this->path_file = DIRNAME(__FILE__).'/../../../web/files/';
 
         $user = $this->context->getUser();
-        $this->setDBContextParameter('id_service', $user->getAttribute('id_service'));
+        //$this->setDBContextParameter('id_service', $user->getAttribute('id_service'));
 
         $services = $user->getAttribute('id_services');
+
         if (is_array($services) && !$this->checkIsRoot()) {
             $service_list_str = '^(';
 
@@ -39,8 +40,6 @@ class nomvcBaseControllerTwo extends nomvcBaseController{
             }
 
             $service_list_str .= ')$';
-
-            //var_dump($service_list_str); //exit;
             $this->setDBContextParameter('id_services', $service_list_str);
         }
     }

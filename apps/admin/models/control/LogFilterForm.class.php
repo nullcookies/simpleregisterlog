@@ -57,13 +57,111 @@ class LogFilterForm extends nomvcAbstractFilterForm{
         $this->addWidget(new nomvcInputTextWidget('Email', 'email'));
         $this->addValidator('email', new nomvcStringValidator(array('required' => false)));
 
+        $this->addWidget(new nomvcInputTextWidget('company_type', 'company_type'));
+        $this->addValidator('company_type', new nomvcStringValidator(array('required' => false)));
+
+        $this->addWidget(new nomvcInputTextWidget('no_of_staff', 'no_of_staff'));
+        $this->addValidator('no_of_staff', new nomvcStringValidator(array('required' => false)));
+
+        $this->addWidget(new nomvcInputTextWidget('Город', 'city'));
+        $this->addValidator('city', new nomvcStringValidator(array('required' => false)));
+
+        $this->addWidget(new nomvcInputTextWidget('Код', 'code'));
+        $this->addValidator('code', new nomvcStringValidator(array('required' => false)));
+
+        $this->addWidget(new nomvcInputTextWidget('Номер', 'num'));
+        $this->addValidator('num', new nomvcStringValidator(array('required' => false)));
+
         $this->withMemberShowFields();
-         
+
+        $services = $this->context->getUser()->getAttribute('id_services');
+        if (is_array($services) && !$this->checkIsRoot()) {
+            $this->addValidator('id_services_main', new nomvcArrayValidator());
+            //$this->addContextMap('id_services_main', 'id_services_main');
+            //$this->setDefault('id_services_main', $services);
+            //$this->setValue('id_services_main', $services);
+        }
+
 		$this->addButton('search');
         $this->addButton('reset');
         $this->addButton('export');
     }
-    
+
+    public function addWheres($criteria, $filters) {
+        $filters = array_merge($this->defaultValues, $filters);
+        foreach ($this->validators as $name => $validator) {
+            if ($name == 'id_services_main'){
+                $whereSqlParts = array();
+                $whereSqlVars = array();
+
+                foreach ($this->context->getUser()->getAttribute('id_services') as $key => $value) {
+                    $whereSqlParts[] = $arrElName = ":{$name}_{$key}";
+                    $whereSqlVars[$arrElName] = $value;
+                }
+                $whereSqlParts = implode(', ', $whereSqlParts);
+                $criteria->addWhere("id_service in ($whereSqlParts)", $whereSqlVars);
+            }
+            elseif (isset($this->contextMap[$name])) {
+                if ($validator instanceof nomvcDatePeriodValidator
+                    || $validator instanceof nomvcDateTimePeriodValidator) {
+                    if (isset($filters[$name]['from']) && $filters[$name]['from'] > '') {
+                        $criteria->addContext($this->contextMap[$name].'_from', $filters[$name]['from']);
+                    }
+                    if (isset($filters[$name]['to']) && $filters[$name]['to'] > '') {
+                        $criteria->addContext($this->contextMap[$name].'_to', $filters[$name]['to']);
+                    }
+                } else {
+                    $criteria->addContext($this->contextMap[$name], $filters[$name]);
+                }
+            }
+            else {
+                if ($validator instanceof nomvcValueInDbMultipleValidator) {
+                    if (isset($filters[$name]) && count($filters[$name])) {
+                        $whereSqlParts = array();
+                        $whereSqlVars = array();
+                        foreach ($filters[$name] as $key => $value) {
+                            $whereSqlParts[] = $arrElName = ":{$name}_{$key}";
+                            $whereSqlVars[$arrElName] = $value;
+                        }
+                        $whereSqlParts = implode(', ', $whereSqlParts);
+                        $criteria->addWhere("{$name} in ($whereSqlParts)", $whereSqlVars);
+                    }
+                } elseif ($validator instanceof nomvcIntegerValidator
+                    || $validator instanceof nomvcValueInDbValidator) {
+                    if (isset($filters[$name]) && $filters[$name] !== null) {
+                        $criteria->addWhere("{$name} like CONCAT('%', upper(:{$name}), '%')", array($name => $filters[$name]));
+                    }
+                } elseif ($validator instanceof nomvcStringValidator) {
+                    if (isset($filters[$name]) && $filters[$name] !== null) {
+                        $criteria->addWhere("upper({$name}) like CONCAT('%', upper(:{$name}), '%')", array($name => $filters[$name]));
+                    }
+                } elseif ($validator instanceof nomvcDatePeriodValidator
+                    || $validator instanceof nomvcDateTimePeriodValidator) {
+                    if (isset($filters[$name])) {
+                        if (isset($filters[$name]['from']) && $filters[$name]['from'] > '') {
+                            $criteria->addWhere("{$name} >= :{$name}_from", array($name.'_from' => date('Y-m-d H:i:s',strtotime($filters[$name]['from']))));
+                        }
+                        if (isset($filters[$name]['to']) && $filters[$name]['to'] > '') {
+                            $criteria->addWhere("{$name} <= :{$name}_to", array($name.'_to' => date('Y-m-d 23:59:59',strtotime($filters[$name]['to']))));
+                        }
+                    }
+                }
+            }
+        }
+        return $filters;
+    }
+
+    protected function checkIsRoot(){
+        $roles = $this->context->getUser()->getAttribute('roles');
+
+        foreach ($roles as $role){
+            if ($role['role'] == 'root')
+                return true;
+        }
+
+        return false;
+    }
+
     protected function withMemberShowFields(){
         $role_list = array();
         foreach ($this->context->getUser()->getAttribute('roles') as $key => $role){

@@ -90,6 +90,10 @@ abstract class nomvcAbstractForm  {
         return isset($this->values[$name]) ? $this->values[$name] : $default;
     }
 
+    public function setValue($name, $value = null) {
+        return $this->values[$name] = $value;
+    }
+
     /**
      * возвращает все проверенные значения, или значения только тех полей, которые переданы в $fields
      */

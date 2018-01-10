@@ -75,7 +75,7 @@ abstract class nomvcAbstractTable {
 	/**
 	 * Добавление столбцов в таблицу
 	 */
-	protected  function addColumn($key, $label, $type, $options = array(), $attributes = array()) {
+	protected function addColumn($key, $label, $type, $options = array(), $attributes = array()) {
 		$this->columns[$key] = array(
 			'label' => $label,
 			'type' => $type,
@@ -171,6 +171,7 @@ abstract class nomvcAbstractTable {
 
 	/** применение фильтров */
 	public function applyFilters($values) {
+
 		$model = $this->rowModelClass;
 		$filters = $this->getFilters();
 		if ($this->filterForm->validate($values)) {

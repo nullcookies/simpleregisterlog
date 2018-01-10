@@ -10,13 +10,17 @@ abstract class Errors {
     const NO_ACTION_FOUND = 105;
     const ACCESS_DENIED = 106;
     const WRONG_CODE = 107;
+
     
     const EMAIL_ALREADY_EXISTS = 108;
     const CAR_NUMBER_ALREADY_EXISTS = 109;
     const BAD_CAR_NUMBER = 110;
     const BAD_CAR_CODE = 111;
     const INCORRECT_OBJ_TYPE = 112;
-    
+
+    const CODE_TYPE_NOT_FOUND = 113;
+    const CODE_TYPE_EMPTY = 114;
+
     const BAD_PARAMETER = 300;
     const BAD_EXTENSION = 301;
     const BAD_SIZE = 302;

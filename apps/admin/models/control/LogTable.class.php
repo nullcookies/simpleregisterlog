@@ -4,7 +4,7 @@ class LogTable extends AbstractMapObjectTable {
 
     public function init($options = array()) {
         $options = array(
-            'sort_by' => 'id_log',
+            'sort_by' => 'dt',
             'sort_order' => 'desc',
             'rowlink' => <<<EOF
 <script>
@@ -47,9 +47,20 @@ EOF
         $this->addColumn('mail_status', 'Статус отправки', 'string');
         $this->addColumn('mail_status_group', 'Статус отправки группы', 'string');
 
+        $this->addColumn('company_type', 'company_type', 'string');
+        $this->addColumn('no_of_staff', 'no_of_staff', 'string');
+        $this->addColumn('email_adress', 'email_adress', 'string');
+        $this->addColumn('inet_phone_spend_PM', 'inet_phone_spend_PM', 'string');
+        $this->addColumn('data_bkup_spend_PM', 'data_bkup_spend_PM', 'string');
+        $this->addColumn('srv_manage_cost_PM', 'srv_manage_cost_PM', 'string');
+        $this->addColumn('city', 'Город', 'string');
+
+        $this->addColumn('code', 'Код', 'string');
+
+        $this->addColumn('num', 'Номер', 'string');
 
         $this->withMemberShowFields();
-        
+
         $this->setFilterForm(new LogFilterForm($this->context));
     }
     

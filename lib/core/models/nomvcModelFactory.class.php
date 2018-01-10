@@ -13,28 +13,32 @@ class nomvcModelFactory {
 //	protected function setContext($criteria = null) {
 	public function setContext($criteria = null) {
 		if ($criteria) {
-			$dbHelper = $this->context->getDbHelper();
 			foreach ($criteria->getContext() as $name => $value) {
-				if(is_array($value)){ 
+				if (is_array($value)){
 					if(empty($value)){ $value = null; }
-					else{ $value = "(^" . implode ("|", $value) . "$)"; }
+					else{ $value = "^(" . implode ("|", $value) . ")$"; }
 				}
-				$sql = "begin project_context.set_parameter('{$name}', :{$name}); end;";
-				$query_code = md5($sql);
-				$dbHelper->addQuery($query_code, $sql);
-				$dbHelper->execute($query_code, array($name => $value));
+
+                $conn = $this->context->getDb();
+                $stmt = $conn->prepare('call setParameter(:parameter, :value); end;');
+                $stmt->bindValue('parameter', $name);
+                $stmt->bindValue('value', $value);
+                $stmt->execute();
 			}
 		}
 	}
-	
+
 	public function select($model, $criteria = null, $fetchByClass = false) {
-		$this->setContext($criteria);
+	    $this->setContext($criteria);
 		$sql = $this->makeQuery($model, $criteria);
 		$dbHelper = $this->context->getDbHelper();
 		$query_code = md5($sql);
 		$dbHelper->addQuery($query_code, $sql);
+
 		$stmt = $dbHelper->select($query_code, $criteria->getValues());
+						
 		$data = array();
+		
 		if ($fetchByClass) {
 			while ($obj = $stmt->fetch(PDO::FETCH_CLASS | PDO::FETCH_CLASSTYPE)) $data[] = $obj;
 		} else {
@@ -43,7 +47,29 @@ class nomvcModelFactory {
 		}
 		return $data;
 	}
-	
+
+    public function select2($model, $sql, $criteria = null, $fetchByClass = false) {
+        $this->setContext($criteria);
+        $sql = $this->makeQuery2($sql, $criteria);
+        $dbHelper = $this->context->getDbHelper();
+        $query_code = md5($sql);
+        $dbHelper->addQuery($query_code, $sql);
+
+        $stmt = $dbHelper->select($query_code, $criteria->getValues());
+
+        $data = array();
+
+        if ($fetchByClass) {
+            while ($obj = $stmt->fetch(PDO::FETCH_CLASS | PDO::FETCH_CLASSTYPE)) $data[] = $obj;
+        } else {
+            $stmt->setFetchMode(PDO::FETCH_CLASS, $model);
+            while ($obj = $stmt->fetch(PDO::FETCH_CLASS)) $data[] = $obj;
+        }
+
+//        var_dump($data); exit;
+        return $data;
+    }
+
 	public function count($model, $criteria = null) {
 		$this->setContext($criteria);
 		$sql = $this->makeCountQuery($model, $criteria);
@@ -55,25 +81,77 @@ class nomvcModelFactory {
 		$stmt->setFetchMode(PDO::FETCH_CLASS, $model);
 		return $stmt->fetch(PDO::FETCH_CLASS);
 	}
-	
+
+    public function count2($model, $sql, $criteria = null) {
+        $this->setContext($criteria);
+        $sql = $this->makeCountQuery2($model, $sql, $criteria);
+        $dbHelper = $this->context->getDbHelper();
+        $query_code = md5($sql);
+        $dbHelper->addQuery($query_code, $sql);
+
+        $stmt = $dbHelper->select($query_code, $criteria->getValues());
+        $stmt->setFetchMode(PDO::FETCH_CLASS, $model);
+        return $stmt->fetch(PDO::FETCH_CLASS);
+    }
+
 	public function makeQuery($model, $criteria) {
-		$sql = "select {$model::getTableName()}.*, @rownum:=@rownum+1 as mf_rownumber from {$model::getTableName()}, (SELECT @rownum:=0) t0";
-		if ($criteria == null) {
-			return $sql;
-		}
-		if ($where = $criteria->getWhere()) {
-			$sql.= ' '.$where;
+		$sql = "select {$model::getTableName()}.*
+                from {$model::getTableName()}";
+		
+		if ($criteria->getWhere() != null) {
+			$sql .= ' '.$criteria->getWhere();
 		}
 
-		//var_dump($criteria->getWhere()); exit;
-
-		$sql .= " order by {$criteria->getOrderBy()}";
+        if ($criteria->getOrderBy() != null){
+		    $sql .= " order by {$criteria->getOrderBy()} ";
+        }
 
 		if ($limit = $criteria->getLimit()) {
-			$sql= "select * from ($sql) t1 where mf_rownumber between {$criteria->getOffset()} + 1 and {$criteria->getLimit()} + {$criteria->getOffset()}";
+			$sql .= " limit {$criteria->getLimit()} offset {$criteria->getOffset()};";
 		}
+
 		return $sql;
 	}
+
+    public function makeQuery2($sql, $criteria) {
+        $sql = "select t0.*
+                from (
+                  $sql
+                ) t0";
+
+        if ($criteria->getWhere() != null) {
+            $sql .= ' '.$criteria->getWhere();
+        }
+
+        if ($criteria->getOrderBy() != null){
+            $sql .= " order by {$criteria->getOrderBy()} ";
+        }
+
+        if ($limit = $criteria->getLimit()) {
+            $sql .= " limit {$criteria->getLimit()} offset {$criteria->getOffset()};";
+        }
+
+        return $sql;
+    }
+
+    public function makeQueryWithSort($model, $criteria) {
+        $sql = "select {$model::getTableName()}.*
+                from {$model::getTableName()}";
+
+        if ($criteria->getWhere() != null) {
+            $sql .= ' '.$criteria->getWhere();
+        }
+
+        if ($criteria->getOrderBy() != null){
+            $sql .= " order by {$criteria->getOrderBy()} ";
+        }
+
+        if ($limit = $criteria->getLimit()) {
+            $sql .= " limit {$criteria->getLimit()} offset {$criteria->getOffset()};";
+        }
+
+        return $sql;
+    }
 	
 	public function makeCountQuery($model, $criteria) {
 		$fields = array('count(*) as "count"');
@@ -90,5 +168,21 @@ class nomvcModelFactory {
 		}
 		return $sql;
 	}
+
+    public function makeCountQuery2($model, $sql, $criteria) {
+        $fields = array('count(*) as "count"');
+        foreach ($model::getTotal() as $field => $function) {
+            $fields[] = "{$function}($field) as {$field}";
+        }
+        $fields = implode(', ', $fields);
+        $sql = "select $fields from ($sql) t0";
+        if ($criteria == null) {
+            return $sql;
+        }
+        if ($where = $criteria->getWhere()) {
+            $sql.= ' '.$where;
+        }
+        return $sql;
+    }
 
 }

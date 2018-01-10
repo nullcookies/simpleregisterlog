@@ -76,6 +76,9 @@ class StatController extends nomvcBaseControllerTwo {
 			case 'log':
 				return 'LogTable';
 				break;
+            case 'log2':
+                return 'Log2Table';
+                break;
             case 'restaurant': 
                 return 'RestaurantTable';
                 break;

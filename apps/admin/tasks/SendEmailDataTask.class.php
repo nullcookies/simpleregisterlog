@@ -165,7 +165,6 @@ class SendEmailDataTask extends nomvcBaseTask{
             WHERE tl.id_service = :id_service
             and tl.dt >= :dt_from 
             and tl.dt <= :dt_to
-            ORDER BY tl.dt DESC
         ';
 
         $stmt = $this->conn->prepare($sql);
@@ -203,7 +202,7 @@ class SendEmailDataTask extends nomvcBaseTask{
         foreach ($fields as $field => $prop) {
             $headers[] = $prop['label'];
         }
-        $data_write[1] = $headers;
+        $data_write[1] = @$headers;
         //var_dump($data_write); exit;
 
         //body
