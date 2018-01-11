@@ -59,6 +59,62 @@ abstract class AbstractAction extends agAbstractAction {
                 from V_MEMBER
                 where login = :msisdn
         ');
+
+        $this->dbHelper->addQuery($this->getAction().'/save_to_db_log_new', '
+            insert into T_LOG (
+                session_id,
+                net,
+                id_service
+            ) values (
+                :session_id,
+                :net,
+                :id_service
+            )
+        ');
+
+        $this->dbHelper->addQuery($this->getAction().'/get_meta_key', '
+            select *
+            from `T_META_KEY`
+            where lower(name) = lower(:name)
+            limit 1
+        ');
+
+        $this->dbHelper->addQuery($this->getAction().'/save_meta_int', '
+            insert into T_LOG_META_INT (
+                id_log,
+                id_meta_key,
+                meta_value
+            ) values (
+                :id_log,
+                :id_meta_key,
+                :meta_value
+            )
+        ');
+
+        $this->dbHelper->addQuery($this->getAction().'/save_meta_time', '
+            insert into T_LOG_META_TIME (
+                id_log,
+                id_meta_key,
+                meta_value
+            ) values (
+                :id_log,
+                :id_meta_key,
+                :meta_value
+            )
+        ');
+
+        $this->dbHelper->addQuery($this->getAction().'/save_meta_text', '
+            insert into T_LOG_META_TEXT (
+                id_log,
+                id_meta_key,
+                meta_value
+            ) values (
+                :id_log,
+                :id_meta_key,
+                :meta_value
+            )
+        ');
+
        // $this->url_image = 'http://'.$_SERVER['HTTP_HOST'].'/api/img.php?';
 //        $this->url_image_preview = 'http://'.$_SERVER['HTTP_HOST'].'/images/preview/';
 
@@ -345,6 +401,55 @@ abstract class AbstractAction extends agAbstractAction {
 //                unset($array[$key]);
 //        }
         return $array;
+    }
+
+    protected function saveToLog($id_service){
+        $this->dbHelper->execute($this->getAction().'/save_to_db_log_new', array(
+            'session_id' => session_id(),
+            'net' => $this->getIp(),
+            'id_service' => $id_service
+        ));
+
+        return $this->context->getDb()->lastInsertid();
+    }
+
+    protected function saveMetaValue($id_log, $meta_name, $meta_value){
+        if ($meta = $this->dbHelper->selectRow($this->getAction().'/get_meta_key', array('name' => $meta_name))){
+
+            $meta = $this->asStrictTypes($meta);
+            foreach ($meta as $key => $val){
+                $meta[strtolower($key)] = strtolower($val);
+            }
+
+            switch ($meta['meta_type']){
+                case 'int':
+                    $this->dbHelper->execute($this->getAction().'/save_meta_int', array(
+                        'id_log' => $id_log,
+                        'id_meta_key' => $meta['id_meta_key'],
+                        'meta_value' => $meta_value
+                    ));
+                    break;
+                case 'time':
+                    $this->dbHelper->execute($this->getAction().'/save_meta_time', array(
+                        'id_log' => $id_log,
+                        'id_meta_key' => $meta['id_meta_key'],
+                        'meta_value' => $meta_value
+                    ));
+                    break;
+                case 'text':
+                    $this->dbHelper->execute($this->getAction().'/save_meta_text', array(
+                        'id_log' => $id_log,
+                        'id_meta_key' => $meta['id_meta_key'],
+                        'meta_value' => $meta_value
+                    ));
+                default:
+                    break;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     protected function checkLimitSendCode($id_member){

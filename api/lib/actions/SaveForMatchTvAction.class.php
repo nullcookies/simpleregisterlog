@@ -28,52 +28,10 @@ class SaveForMatchTvAction extends AbstractAction {
                 :num
             )
         ');
-
-        $this->dbHelper->addQuery($this->getAction().'/get_id_meta_key', '
-            select *
-            from `T_META_KEY`
-            where lower(name) = lower(:name)
-        ');
-
-        $this->dbHelper->addQuery($this->getAction().'/save_meta_text', '
-            insert into T_LOG_META_TEXT (
-                id_log,
-                id_meta_key,
-                meta_value
-            ) values (
-                :id_log,
-                :id_meta_key,
-                :meta_value
-            )
-        ');
-
-        $this->dbHelper->addQuery($this->getAction().'/save_meta_int', '
-            insert into T_LOG_META_INT (
-                id_log,
-                id_meta_key,
-                meta_value
-            ) values (
-                :id_log,
-                :id_meta_key,
-                :meta_value
-            )
-        ');
-
-        $this->dbHelper->addQuery($this->getAction().'/save_meta_time', '
-            insert into T_LOG_META_INT (
-                id_log,
-                id_meta_key,
-                meta_value
-            ) values (
-                :id_log,
-                :id_meta_key,
-                :meta_value
-            )
-        ');
     }
 
     public function execute() {
-        $this->dbHelper->execute($this->getAction().'/save_to_db_log', array(
+         $this->dbHelper->execute($this->getAction().'/save_to_db_log', array(
             'session_id' => session_id(),
             'net' => $this->getIp(),
             'id_service' => $this->id_service,
@@ -81,12 +39,14 @@ class SaveForMatchTvAction extends AbstractAction {
         ));
 
         $id_log = $this->context->getDb()->lastInsertid();
+        $this->saveMetaValue($id_log, 'num', $this->getValue('num'));
 
-        $this->dbHelper->execute($this->getAction().'/save_meta_int', array(
-            'id_log' => $id_log,
-            'id_meta_key' => 32,
-            'meta_value' => $this->getValue('num')
-        ));
+        //all new!
+        /*
+        if ($id_log = $this->saveToLog($this->id_service)){
+            $this->saveMetaValue($id_log, 'num', $this->getValue('num'));
+        }
+        */
 
         return array('result' => Errors::SUCCESS);
     }
