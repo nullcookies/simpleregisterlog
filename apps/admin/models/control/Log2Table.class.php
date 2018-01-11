@@ -78,6 +78,7 @@ EOF
             inner join `T_SHOW_FIELD` tsf on tssf.id_show_field = tsf.id_show_field
             inner join `T_META_KEY` tmk on tsf.id_meta_key = tmk.id_meta_key
             where tssf.`id_service` in (bind_str)
+            and tsf.show_in_table = 1
             group by 
             tssf.id_show_field,
             tsf.name,
