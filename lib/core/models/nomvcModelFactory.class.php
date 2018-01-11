@@ -1,16 +1,13 @@
 <?php
 
 class nomvcModelFactory {
-	
-	// ссылка на контекст
+
 	protected $context;
 
-	/** Конструктор */
 	public function __construct($context) {
 		$this->context = $context;
 	}
-	
-//	protected function setContext($criteria = null) {
+
 	public function setContext($criteria = null) {
 		if ($criteria) {
 			foreach ($criteria->getContext() as $name => $value) {
@@ -55,7 +52,14 @@ class nomvcModelFactory {
         $query_code = md5($sql);
         $dbHelper->addQuery($query_code, $sql);
 
-        $stmt = $dbHelper->select($query_code, $criteria->getValues());
+        $services = array();
+        if ($id_services = $this->context->getUser()->getAttribute('id_services')){
+            foreach ($id_services as $key => $id_service){
+                $services["id_service_meta_$key"] = $id_service;
+            }
+        }
+
+        $stmt = $dbHelper->select($query_code, array_merge($criteria->getValues(), $services));
 
         $data = array();
 
@@ -66,7 +70,6 @@ class nomvcModelFactory {
             while ($obj = $stmt->fetch(PDO::FETCH_CLASS)) $data[] = $obj;
         }
 
-//        var_dump($data); exit;
         return $data;
     }
 
@@ -84,13 +87,25 @@ class nomvcModelFactory {
 
     public function count2($model, $sql, $criteria = null) {
         $this->setContext($criteria);
+
         $sql = $this->makeCountQuery2($model, $sql, $criteria);
+
         $dbHelper = $this->context->getDbHelper();
+
         $query_code = md5($sql);
         $dbHelper->addQuery($query_code, $sql);
 
-        $stmt = $dbHelper->select($query_code, $criteria->getValues());
+        $services = array();
+        if ($id_services = $this->context->getUser()->getAttribute('id_services')){
+            foreach ($id_services as $key => $id_service){
+                $services["id_service_meta_$key"] = $id_service;
+            }
+        }
+
+        $stmt = $dbHelper->select($query_code, array_merge($criteria->getValues(), $services));
+
         $stmt->setFetchMode(PDO::FETCH_CLASS, $model);
+
         return $stmt->fetch(PDO::FETCH_CLASS);
     }
 
@@ -131,6 +146,7 @@ class nomvcModelFactory {
             $sql .= " limit {$criteria->getLimit()} offset {$criteria->getOffset()};";
         }
 
+        //var_dump($sql); exit;
         return $sql;
     }
 

@@ -2,7 +2,7 @@
 
 class Log2Table extends AbstractMapObjectTable {
 
-    protected $id_service;
+    protected $id_services;
 
     public function init($options = array()) {
         $options = array(
@@ -18,7 +18,7 @@ class Log2Table extends AbstractMapObjectTable {
 EOF
         );
 
-        $this->id_service = $this->context->getUser()->getAttribute('id_service');
+        $this->id_services = $this->context->getUser()->getAttribute('id_services');
 
         parent::init($options);
 
@@ -63,7 +63,7 @@ EOF
         $this->setFilterForm(new Log2FilterForm($this->context));
     }
 
-    public function getViewSqlForService($id_service){
+    public function getMetaKeys($id_services){
         $conn = $this->context->getDb();
 
         $sql = '
@@ -77,11 +77,29 @@ EOF
             from `T_SERVICE_SHOW_FIELD` tssf
             inner join `T_SHOW_FIELD` tsf on tssf.id_show_field = tsf.id_show_field
             inner join `T_META_KEY` tmk on tsf.id_meta_key = tmk.id_meta_key
-            where tssf.`id_service` = :id_service
+            where tssf.`id_service` in (bind_str)
+            group by 
+            tssf.id_show_field,
+            tsf.name,
+            tsf.name_rus,
+            tmk.id_meta_key,
+            tmk.name,
+            tmk.meta_type
             order by tssf.order_num
         ';
+
+        $bind_str = '';
+        foreach ($id_services as $key => $id_service) {
+            $bind_str .= isset($id_services[$key + 1]) ? ":id_service_meta_$key, " : ":id_service_meta_$key";
+        }
+
+        $sql = str_replace('bind_str', $bind_str, $sql);
+
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('id_service', $id_service);
+        foreach ($id_services as $key => $id_service){
+            $stmt->bindValue("id_service_meta_$key", $id_service);
+        }
+
         $stmt->execute();
 
         $meta = array();
@@ -92,6 +110,12 @@ EOF
 
             $meta[] = $row;
         }
+
+        return $meta;
+    }
+
+    public function getViewSqlForServices($id_services){
+        $meta_keys = $this->getMetaKeys($id_services);
 
         $select = '
             select 
@@ -104,10 +128,17 @@ EOF
             from `T_LOG` tl
             inner join `T_SERVICE` ts on tl.`id_service` = ts.`id_service`';
         $where = '
-            where tl.`id_service` = '.$id_service.'
+            where tl.`id_service` in (bind_str)
         ';
 
-        foreach ($meta as $key => $val){
+        $bind_str = '';
+        foreach ($id_services as $key => $id_service) {
+            $bind_str .= isset($id_services[$key + 1]) ? ":id_service_meta_$key, " : ":id_service_meta_$key";
+        }
+
+        $where = str_replace('bind_str', $bind_str, $where);
+
+        foreach ($meta_keys as $key => $val){
             switch($val['meta_type']){
                 case 'int':
                     $select .= ', tlmi'.$val['id_meta_key'].'.meta_value as '.$val['meta_key'].'';
@@ -128,15 +159,12 @@ EOF
             }
         }
 
-        $sql = $select.$from.$where;//.$orderBy;
+        $sql = $select.$from.$where;
 
         return $sql;
-        var_dump($sql); exit;
     }
 
     protected function withMemberShowFields(){
-        $conn = $this->context->getDb();
-
         $role_list = array();
         foreach ($this->context->getUser()->getAttribute('roles') as $key => $role){
             $role_list[$key] = $role['role'];
@@ -153,28 +181,7 @@ EOF
             }
         }
 
-        $sql = '
-            select 
-            tssf.id_show_field,
-            tsf.name,
-            tsf.name_rus,
-            tmk.id_meta_key,
-            tmk.name as meta_key,
-            tmk.meta_type
-            from `T_SERVICE_SHOW_FIELD` tssf
-            inner join `T_SHOW_FIELD` tsf on tssf.id_show_field = tsf.id_show_field
-            inner join `T_META_KEY` tmk on tsf.id_meta_key = tmk.id_meta_key
-            where tssf.`id_service` = :id_service
-            order by tssf.order_num
-        ';
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue('id_service', $this->id_service);
-        $stmt->execute();
-
-        $fields = array();
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            $fields[] = $row['name'];
-        }
+        $meta_keys = $this->getMetaKeys($this->id_services);
 
         $this->columns_old = $this->columns;
 
@@ -188,9 +195,9 @@ EOF
             }
         }
 
-        foreach ($fields as $field) {
-            if (isset($this->columns_old[$field])) {
-                $this->columns[$field] = $this->columns_old[$field];
+        foreach ($meta_keys as $key) {
+            if (isset($this->columns_old[$key['name']])) {
+                $this->columns[$key['name']] = $this->columns_old[$key['name']];
             }
         }
     }
@@ -232,7 +239,7 @@ EOF
         // конфигурация вывода таблицы
         $tableOutputConf = array(
             'columns'	=> $this->columns,
-            'content'	=> $this->context->getModelFactory()->select2($this->rowModelClass, $this->getViewSqlForService($this->id_service), $criteria, $this->fetchByClass),
+            'content'	=> $this->context->getModelFactory()->select2($this->rowModelClass, $this->getViewSqlForServices($this->id_services), $criteria, $this->fetchByClass),
             'filters'	=> $this->filterForm,
             'batch'		=> $this->batchActions,
         );
@@ -263,7 +270,7 @@ EOF
     protected function getTotalRows() {
         if ($this->total_rows == null) {
             $criteria = $this->getCriteria();
-            $this->total = $this->context->getModelFactory()->count2($this->rowModelClass, $this->getViewSqlForService($this->id_service), $criteria);
+            $this->total = $this->context->getModelFactory()->count2($this->rowModelClass, $this->getViewSqlForServices($this->id_services), $criteria);
             $this->total_rows = $this->total->count;
             if ($this->getOffset() > $this->total_rows) {
                 $this->setOffset(ceil($this->total_rows / $this->getLimit()));
@@ -273,7 +280,6 @@ EOF
     }
 
     protected function runAsXls() {
-
         $rowModelClass = $this->rowModelClass;
 
         $filename = 'export_'.$this->controller->underscore($rowModelClass)."_".date('d-m-Y').".xlsx";
@@ -314,7 +320,7 @@ EOF
         $sheet->getStyle('A'.$rowNum.':'.PHPExcel_Cell::stringFromColumnIndex($colNum - 1).$rowNum)->applyFromArray($styleArray);
 
         $criteria = $this->getCriteria();	// формируем условия выборки
-        $rows = $this->context->getModelFactory()->select2($this->rowModelClass, $this->getViewSqlForService($this->id_service), $criteria, $this->fetchByClass);
+        $rows = $this->context->getModelFactory()->select2($this->rowModelClass, $this->getViewSqlForServices($this->id_services), $criteria, $this->fetchByClass);
         foreach ($rows as $row) {
             $rowNum++;
             $colNum = 0;

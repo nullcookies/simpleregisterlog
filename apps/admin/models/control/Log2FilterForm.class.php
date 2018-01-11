@@ -2,14 +2,13 @@
 
 class Log2FilterForm extends nomvcAbstractFilterForm{
 
-    protected $id_service;
+    protected $id_services;
 
     public function init() {
         parent::init();
 
-        $this->id_service = $this->context->getUser()->getAttribute('id_service');
+        $this->id_services = $this->context->getUser()->getAttribute('id_services');
 
-        //Период
         $this->addWidget(new nomvcInputDatePeriodPickerWidget("Период отправки запроса", "dt"));
         $this->addValidator("dt", new nomvcDatePeriodValidator());
 
@@ -46,7 +45,6 @@ class Log2FilterForm extends nomvcAbstractFilterForm{
         $this->addWidget(new nomvcInputTextWidget("Статус отправки группы", "mail_status_group"));
         $this->addValidator("mail_status_group", new nomvcStringValidator());
 
-
         $this->addWidget(new nomvcInputTextWidget('Имя', 'name'));
         $this->addValidator('name', new nomvcStringValidator(array('required' => false)));
 
@@ -82,14 +80,62 @@ class Log2FilterForm extends nomvcAbstractFilterForm{
         $services = $this->context->getUser()->getAttribute('id_services');
         if (is_array($services) && !$this->checkIsRoot()) {
             $this->addValidator('id_services_main', new nomvcArrayValidator());
-            //$this->addContextMap('id_services_main', 'id_services_main');
-            //$this->setDefault('id_services_main', $services);
-            //$this->setValue('id_services_main', $services);
         }
 
         $this->addButton('search');
         $this->addButton('reset');
         $this->addButton('export');
+    }
+
+    public function getMetaKeys($id_services){
+        $conn = $this->context->getDb();
+
+        $sql = '
+            select 
+            tssf.id_show_field,
+            tsf.name,
+            tsf.name_rus,
+            tmk.id_meta_key,
+            tmk.name as meta_key,
+            tmk.meta_type
+            from `T_SERVICE_SHOW_FIELD` tssf
+            inner join `T_SHOW_FIELD` tsf on tssf.id_show_field = tsf.id_show_field
+            inner join `T_META_KEY` tmk on tsf.id_meta_key = tmk.id_meta_key
+            where tssf.`id_service` in (bind_str)
+            group by 
+            tssf.id_show_field,
+            tsf.name,
+            tsf.name_rus,
+            tmk.id_meta_key,
+            tmk.name,
+            tmk.meta_type
+            order by tssf.order_num
+        ';
+
+        $bind_str = '';
+        foreach ($id_services as $key => $id_service) {
+            $bind_str .= isset($id_services[$key + 1]) ? ":id_service_$key, " : ":id_service_$key";
+        }
+
+        $sql = str_replace('bind_str', $bind_str, $sql);
+
+        $stmt = $conn->prepare($sql);
+        foreach ($id_services as $key => $id_service){
+            $stmt->bindValue("id_service_$key", $id_service);
+        }
+
+        $stmt->execute();
+
+        $meta = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            foreach ($row as $key => $val){
+                $row[$key] = strtolower($val);
+            }
+
+            $meta[] = $row;
+        }
+
+        return $meta;
     }
 
     public function addWheres($criteria, $filters) {
@@ -168,8 +214,6 @@ class Log2FilterForm extends nomvcAbstractFilterForm{
     }
 
     protected function withMemberShowFields(){
-        $conn = $this->context->getDb();
-
         $role_list = array();
         foreach ($this->context->getUser()->getAttribute('roles') as $key => $role){
             $role_list[$key] = $role['role'];
@@ -186,28 +230,7 @@ class Log2FilterForm extends nomvcAbstractFilterForm{
             }
         }
 
-        $sql = '
-            select 
-            tssf.id_show_field,
-            tsf.name,
-            tsf.name_rus,
-            tmk.id_meta_key,
-            tmk.name as meta_key,
-            tmk.meta_type
-            from `T_SERVICE_SHOW_FIELD` tssf
-            inner join `T_SHOW_FIELD` tsf on tssf.id_show_field = tsf.id_show_field
-            inner join `T_META_KEY` tmk on tsf.id_meta_key = tmk.id_meta_key
-            where tssf.`id_service` = :id_service
-            order by tssf.order_num
-        ';
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue('id_service', $this->id_service);
-        $stmt->execute();
-
-        $fields = array();
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            $fields[] = $row['name'];
-        }
+        $meta_keys = $this->getMetaKeys($this->id_services);
 
         $this->widgets_old = $this->widgets;
 
@@ -221,9 +244,9 @@ class Log2FilterForm extends nomvcAbstractFilterForm{
             }
         }
 
-        foreach ($fields as $field) {
-            if (isset($this->widgets_old[$field])) {
-                $this->widgets[$field] = $this->widgets_old[$field];
+        foreach ($meta_keys as $key) {
+            if (isset($this->widgets_old[$key['name']])) {
+                $this->widgets[$key['name']] = $this->widgets_old[$key['name']];
             }
         }
     }
