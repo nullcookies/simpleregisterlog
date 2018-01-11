@@ -437,12 +437,12 @@ abstract class AbstractAction extends agAbstractAction {
                     ));
                     break;
                 case 'text':
+                default:
                     $this->dbHelper->execute($this->getAction().'/save_meta_text', array(
                         'id_log' => $id_log,
                         'id_meta_key' => $meta['id_meta_key'],
                         'meta_value' => $meta_value
                     ));
-                default:
                     break;
             }
 
