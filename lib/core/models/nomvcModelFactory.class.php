@@ -146,7 +146,6 @@ class nomvcModelFactory {
             $sql .= " limit {$criteria->getLimit()} offset {$criteria->getOffset()};";
         }
 
-        //var_dump($sql); exit;
         return $sql;
     }
 

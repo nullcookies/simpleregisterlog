@@ -101,8 +101,8 @@ class Log2FilterForm extends nomvcAbstractFilterForm{
             from `T_SERVICE_SHOW_FIELD` tssf
             inner join `T_SHOW_FIELD` tsf on tssf.id_show_field = tsf.id_show_field
             inner join `T_META_KEY` tmk on tsf.id_meta_key = tmk.id_meta_key
-            where tssf.`id_service` in (bind_str)
-            and tsf.show_in_filter = 1
+            where tsf.show_in_filter = 1
+            bind_str
             group by 
             tssf.id_show_field,
             tsf.name,
@@ -113,12 +113,19 @@ class Log2FilterForm extends nomvcAbstractFilterForm{
             order by tssf.order_num
         ';
 
-        $bind_str = '';
-        foreach ($id_services as $key => $id_service) {
-            $bind_str .= isset($id_services[$key + 1]) ? ":id_service_$key, " : ":id_service_$key";
-        }
+        $bind_str = 'and tssf.`id_service` in (str)';
+        $str = '';
+        if (is_array($id_services) && !empty($id_services)) {
+            foreach ($id_services as $key => $id_service) {
+                $str .= isset($id_services[$key + 1]) ? ":id_service_$key, " : ":id_service_$key";
+            }
 
-        $sql = str_replace('bind_str', $bind_str, $sql);
+            $bind_str = str_replace('str', $str, $bind_str);
+            $sql = str_replace('bind_str', $bind_str, $sql);
+        }
+        else {
+            $sql = str_replace('bind_str', $str, $sql);
+        }
 
         $stmt = $conn->prepare($sql);
         foreach ($id_services as $key => $id_service){
@@ -146,12 +153,15 @@ class Log2FilterForm extends nomvcAbstractFilterForm{
                 $whereSqlParts = array();
                 $whereSqlVars = array();
 
-                foreach ($this->context->getUser()->getAttribute('id_services') as $key => $value) {
-                    $whereSqlParts[] = $arrElName = ":{$name}_{$key}";
-                    $whereSqlVars[$arrElName] = $value;
+                $id_services = $this->context->getUser()->getAttribute('id_services');
+                if (is_array($id_services) && !empty($id_services)) {
+                    foreach ($id_services as $key => $value) {
+                        $whereSqlParts[] = $arrElName = ":{$name}_{$key}";
+                        $whereSqlVars[$arrElName] = $value;
+                    }
+                    $whereSqlParts = implode(', ', $whereSqlParts);
+                    $criteria->addWhere("id_service in ($whereSqlParts)", $whereSqlVars);
                 }
-                $whereSqlParts = implode(', ', $whereSqlParts);
-                $criteria->addWhere("id_service in ($whereSqlParts)", $whereSqlVars);
             }
             elseif (isset($this->contextMap[$name])) {
                 if ($validator instanceof nomvcDatePeriodValidator
