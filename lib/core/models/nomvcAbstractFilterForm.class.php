@@ -89,7 +89,7 @@ abstract class nomvcAbstractFilterForm extends nomvcAbstractForm  {
 					$criteria->addContext($this->contextMap[$name], $filters[$name]);
 				}
 			} else {
-				if ($validator instanceof nomvcValueInDbMultipleValidator) {
+				if (($validator instanceof nomvcValueInDbMultipleValidator) || ($validator instanceof nomvcValueInDictionaryMultipleValidator)) {
 					if (isset($filters[$name]) && count($filters[$name])) {
 						$whereSqlParts = array();
 						$whereSqlVars = array();

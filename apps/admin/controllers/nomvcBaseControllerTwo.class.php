@@ -62,12 +62,13 @@ class nomvcBaseControllerTwo extends nomvcBaseController{
     }
 
     protected function setDBContextParameter($var, $val) {
-        $conn = $this->context->getDb();
-        $stmt = $conn->prepare('call setParameter(:parameter, :value); end;');        
-        $stmt->bindValue('parameter', $var);
-        $stmt->bindValue('value', $val);
-        $stmt->execute();
-        
+        if ($val != '^()$') {
+            $conn = $this->context->getDb();
+            $stmt = $conn->prepare('call setParameter(:parameter, :value); end;');
+            $stmt->bindValue('parameter', $var);
+            $stmt->bindValue('value', $val);
+            $stmt->execute();
+        }
     }
 
     public function run(){

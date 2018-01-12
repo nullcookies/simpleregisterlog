@@ -27,6 +27,22 @@ class Log2FilterForm extends nomvcAbstractFilterForm{
             "key" => "id_service"
         )));
 
+        /*
+        $this->addWidget(new nomvcSelectFromMultipleDictionaryWidget('Включен?', 'is_enable', array(
+            'helper' => $this->context->getDbHelper(),
+            'property' => 'is_enable',
+            'order' => 'property_key',
+            'required' => false,
+            'multiple' => true
+        )));
+
+        $this->addValidator('is_enable', new nomvcValueInDictionaryMultipleValidator(array(
+            'required' => false,
+            "helper" => $this->context->getDbHelper(),
+            'property' => 'is_enable'
+        )));
+        */
+
         $this->addWidget(new nomvcInputTextWidget('Email id', 'mail_email_id'));
         $this->addValidator('mail_email_id', new nomvcIntegerValidator(array('required' => false)));
 
@@ -177,7 +193,7 @@ class Log2FilterForm extends nomvcAbstractFilterForm{
                 }
             }
             else {
-                if ($validator instanceof nomvcValueInDbMultipleValidator) {
+                if (($validator instanceof nomvcValueInDbMultipleValidator) || ($validator instanceof nomvcValueInDictionaryMultipleValidator)) {
                     if (isset($filters[$name]) && count($filters[$name])) {
                         $whereSqlParts = array();
                         $whereSqlVars = array();
@@ -232,7 +248,8 @@ class Log2FilterForm extends nomvcAbstractFilterForm{
 
         if (!in_array('root', $role_list)){
             $show_fields = $this->getMemberShowFields();
-            $exclude_list = array('id_log', 'id_service', 'dt', 'service');
+            $show_fields = array_merge($show_fields, array('is_enable'));
+            $exclude_list = array('id_log', 'id_service', 'dt', 'service', 'is_enable');
 
             foreach ($this->widgets as $key => $column){
                 if (!in_array($key, $show_fields) && !in_array($key, $exclude_list)){
@@ -250,7 +267,7 @@ class Log2FilterForm extends nomvcAbstractFilterForm{
             if ($unset)
                 unset($this->widgets[$key]);
 
-            if ($key == 'id_service'){
+            if ($key == 'service'){
                 $unset = true;
             }
         }

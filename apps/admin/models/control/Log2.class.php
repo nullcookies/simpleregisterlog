@@ -2,7 +2,7 @@
 
 class Log2 {
     public static function getTableName() {
-        return 'V_LOG';
+        return 'V_LOG2';
     }
 
     public function getRowStatusClass() {
