@@ -319,6 +319,13 @@ class SaveToDbAction extends AbstractAction {
                 'city' => $this->getValue('city')
             ));
 
+            //new!
+            $id_log = $this->context->getDb()->lastInsertid();
+            foreach ($this->values as $key => $value){
+                if (!empty($value))
+                    $this->saveMetaValue($id_log, $key, $value);
+            }
+
             //var_dump($has_auto_email_notify); exit;
             if (!empty($has_auto_email_notify)) {
                 $this->autoEmailNotify();

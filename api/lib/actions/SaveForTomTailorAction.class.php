@@ -116,6 +116,13 @@ class SaveForTomTailorAction extends AbstractAction {
                 'code' => $row['code']
             ));
 
+            //new!
+            $id_log = $this->context->getDb()->lastInsertid();
+            foreach (array_merge($this->values, array('code' => $row['code'])) as $key => $value){
+                if (!empty($value))
+                    $this->saveMetaValue($id_log, $key, $value);
+            }
+
             $this->sendCode($this->getValue('email'), $row['code'], $row['name']);
 
             return array('result' => Errors::SUCCESS);

@@ -414,40 +414,42 @@ abstract class AbstractAction extends agAbstractAction {
     }
 
     protected function saveMetaValue($id_log, $meta_name, $meta_value){
-        if ($meta = $this->dbHelper->selectRow($this->getAction().'/get_meta_key', array('name' => $meta_name))){
+        try {
+            if ($meta = $this->dbHelper->selectRow($this->getAction() . '/get_meta_key', array('name' => $meta_name))) {
+                $meta = $this->asStrictTypes($meta);
+                foreach ($meta as $key => $val) {
+                    $meta[strtolower($key)] = strtolower($val);
+                }
 
-            $meta = $this->asStrictTypes($meta);
-            foreach ($meta as $key => $val){
-                $meta[strtolower($key)] = strtolower($val);
+                switch ($meta['meta_type']) {
+                    case 'int':
+                        $this->dbHelper->execute($this->getAction() . '/save_meta_int', array(
+                            'id_log' => $id_log,
+                            'id_meta_key' => $meta['id_meta_key'],
+                            'meta_value' => $meta_value
+                        ));
+                        break;
+                    case 'time':
+                        $this->dbHelper->execute($this->getAction() . '/save_meta_time', array(
+                            'id_log' => $id_log,
+                            'id_meta_key' => $meta['id_meta_key'],
+                            'meta_value' => $meta_value
+                        ));
+                        break;
+                    case 'text':
+                    default:
+                        $this->dbHelper->execute($this->getAction() . '/save_meta_text', array(
+                            'id_log' => $id_log,
+                            'id_meta_key' => $meta['id_meta_key'],
+                            'meta_value' => $meta_value
+                        ));
+                        break;
+                }
+
+                return true;
             }
-
-            switch ($meta['meta_type']){
-                case 'int':
-                    $this->dbHelper->execute($this->getAction().'/save_meta_int', array(
-                        'id_log' => $id_log,
-                        'id_meta_key' => $meta['id_meta_key'],
-                        'meta_value' => $meta_value
-                    ));
-                    break;
-                case 'time':
-                    $this->dbHelper->execute($this->getAction().'/save_meta_time', array(
-                        'id_log' => $id_log,
-                        'id_meta_key' => $meta['id_meta_key'],
-                        'meta_value' => $meta_value
-                    ));
-                    break;
-                case 'text':
-                default:
-                    $this->dbHelper->execute($this->getAction().'/save_meta_text', array(
-                        'id_log' => $id_log,
-                        'id_meta_key' => $meta['id_meta_key'],
-                        'meta_value' => $meta_value
-                    ));
-                    break;
-            }
-
-            return true;
         }
+        catch(exception $e){}
 
         return false;
     }

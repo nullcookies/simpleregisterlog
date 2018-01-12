@@ -43,7 +43,7 @@
             try {
                 $conn = $context->getDb();
                 $tmp = $row;
-                $sql = 'insert into `T_LOG` (
+                $sql = 'insert into `T_LOG_MAIL` (
                     `id_service`,
                     `mail_event_name`,
                     `mail_event_time`,
