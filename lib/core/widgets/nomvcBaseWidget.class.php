@@ -27,6 +27,9 @@ abstract class nomvcBaseWidget {
 		$this->addOption('js_handler', false, false);
 	}
 
+	public function setlabel($label){
+        $this->label = $label;
+    }
 	/**
 	 * Проверка корректности настроек виджета
 	 */

@@ -4,6 +4,8 @@ class Log2FilterForm extends nomvcAbstractFilterForm{
 
     protected $id_services;
 
+    protected $locale;
+
     public function init() {
         parent::init();
 
@@ -98,9 +100,36 @@ class Log2FilterForm extends nomvcAbstractFilterForm{
             $this->addValidator('id_services_main', new nomvcArrayValidator());
         }
 
+        $this->locale = 'ru';
+        $this->renameFieldNamesWithDb();
+
         $this->addButton('search');
         $this->addButton('reset');
         $this->addButton('export');
+    }
+
+    protected function renameFieldNamesWithDb(){
+        $conn = $this->context->getDb();
+        $sql = 'select name, name_rus from `T_SHOW_FIELD` group by name, name_rus';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        $field_names = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $field_names[$row['name']] = $row['name_rus'];
+        }
+
+        switch ($this->locale){
+            case 'ru':
+                foreach ($this->widgets as $key => $widget){
+                    if (isset($field_names[$key]))
+                        $this->widgets[$key]->setLabel($field_names[$key]);
+                }
+                break;
+            case 'en':
+            default:
+                break;
+        }
     }
 
     public function getMetaKeys($id_services){
@@ -267,7 +296,7 @@ class Log2FilterForm extends nomvcAbstractFilterForm{
             if ($unset)
                 unset($this->widgets[$key]);
 
-            if ($key == 'service'){
+            if ($key == 'id_service'){
                 $unset = true;
             }
         }

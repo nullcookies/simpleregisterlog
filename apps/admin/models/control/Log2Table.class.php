@@ -4,6 +4,8 @@ class Log2Table extends AbstractMapObjectTable {
 
     protected $id_services;
 
+    protected $locale;
+
     public function init($options = array()) {
         $options = array(
             'sort_by' => 'dt',
@@ -61,6 +63,33 @@ EOF
         $this->withMemberShowFields();
 
         $this->setFilterForm(new Log2FilterForm($this->context));
+
+        $this->locale = 'ru';
+        $this->renameFieldNamesWithDb();
+    }
+
+    protected function renameFieldNamesWithDb(){
+        $conn = $this->context->getDb();
+        $sql = 'select name, name_rus from `T_SHOW_FIELD` group by name, name_rus';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        $field_names = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $field_names[$row['name']] = $row['name_rus'];
+        }
+
+        switch ($this->locale){
+            case 'ru':
+                foreach ($this->columns as $key => $column){
+                    if (isset($field_names[$key]))
+                        $this->columns[$key]['label'] = $field_names[$key];
+                }
+                break;
+            case 'en':
+            default:
+                break;
+        }
     }
 
     public function getMetaKeys($id_services){
