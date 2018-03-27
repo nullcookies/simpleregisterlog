@@ -36,7 +36,7 @@ try {
 
 	if (!$postData) {
 		http_response_code(400);
-		echo "POST data empty empty";
+		echo "POST data empty";
 		exit();
 	}
 	
