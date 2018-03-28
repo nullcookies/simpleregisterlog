@@ -314,3 +314,86 @@ Post data:
 CP: 1
 Webo: sdsdsdsddfdfdf
 Webo done
+---------------------
+2018-03-28 15:08:30
+Array
+(
+)
+
+Array
+(
+)
+{
+  "cp": 1,
+  "AFFICHE_W": "{{visitor_properties.Weborama_ID}}"
+}
+Post data:
+CP: 1
+Webo: {{visitor_properties.Weborama_ID}}
+---------------------
+2018-03-28 15:08:35
+Array
+(
+)
+
+Array
+(
+)
+{
+  "cp": 2,
+  "AFFICHE_W": "{{visitor_properties.Weborama_ID}}"
+}
+Post data:
+CP: 2
+Webo: {{visitor_properties.Weborama_ID}}
+---------------------
+2018-03-28 15:09:06
+Array
+(
+)
+
+Array
+(
+)
+{
+  "cp": 5,
+  "AFFICHE_W": "HL2VGK9NLL4xCbpr8iSsru"
+}
+Post data:
+CP: 5
+Webo: HL2VGK9NLL4xCbpr8iSsru
+Webo done
+---------------------
+2018-03-28 15:09:09
+Array
+(
+)
+
+Array
+(
+)
+{
+  "cp": 1,
+  "AFFICHE_W": "HL2VGK9NLL4xCbpr8iSsru"
+}
+Post data:
+CP: 1
+Webo: HL2VGK9NLL4xCbpr8iSsru
+Webo done
+---------------------
+2018-03-28 15:09:17
+Array
+(
+)
+
+Array
+(
+)
+{
+  "cp": 2,
+  "AFFICHE_W": "HL2VGK9NLL4xCbpr8iSsru"
+}
+Post data:
+CP: 2
+Webo: HL2VGK9NLL4xCbpr8iSsru
+Webo done

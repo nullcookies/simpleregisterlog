@@ -61,9 +61,9 @@ try {
 	$body .= "CP: $cp\r\n";
 	$body .= "Webo: $webo\r\n";
 
-	$f = fopen('comagic.log', 'a');
+	/*$f = fopen('comagic.log', 'a');
 	fputs($f, $body);
-	fclose($f);
+	fclose($f);*/
 
 	$url = 
 		"http://comagic.solution.weborama.fr/fcgi-bin/dispatch.fcgi?" . 
@@ -105,9 +105,9 @@ try {
 	echo "Done";
 
 
-	$f = fopen('comagic.log', 'a');
+	/*$f = fopen('comagic.log', 'a');
 	fputs($f, "Webo done\r\n");
-	fclose($f);
+	fclose($f);*/
 } catch (Exception $ex) {
 	echo $ex->getMessage();
 }
