@@ -79,29 +79,10 @@ class StatController extends nomvcBaseControllerTwo {
             case 'log2':
                 return 'Log2Table';
                 break;
-            case 'restaurant': 
-                return 'RestaurantTable';
-                break;
+            case 'maillog':
+                return 'MailLogTable';
             case 'member': 
                 return 'MemberTable';
-                break;
-            case 'purpose': 
-                return 'PurposeTable';
-                break;
-            case 'prize':
-                return 'PrizeTable';
-                break;
-            case 'news':
-                return 'NewsTable';
-                break;
-            case 'prize-request':
-                return 'PrizeRequestTable';
-                break;
-            case 'add-purpose-request':
-                return 'AddPurposeRequestTable';
-                break;
-            case 'faq':
-                return 'FaqTable';
                 break;
             default: return false;
         }

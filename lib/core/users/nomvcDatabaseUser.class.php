@@ -15,7 +15,7 @@ abstract class nomvcDatabaseUser extends nomvcSessionUser {
     private $dbHelper;
 
     /** @const уровень пользователя, с которого начинается доступ в Админку */
-    const USER_LEVEL_AVAILABLE = 3;
+    const USER_LEVEL_AVAILABLE = 7;
 
     public function init(){
         parent::init();
@@ -73,7 +73,7 @@ abstract class nomvcDatabaseUser extends nomvcSessionUser {
         );
         $this->dbHelper->addQuery('check_user', $sql);
         $user = $this->dbHelper->selectRow('check_user', array($this->dbLogin => $login, $this->dbPassword => $password));
-        
+
         if ($user === false) return false;
         foreach ($user as $key => $val) {
             $this->setAttribute(strtolower($key), $val);
@@ -85,6 +85,8 @@ abstract class nomvcDatabaseUser extends nomvcSessionUser {
 
         $this->setAttribute('has_auth', true);
         $this->getUserRoles();
+
+
         return true;
     }
 
@@ -150,9 +152,7 @@ abstract class nomvcDatabaseUser extends nomvcSessionUser {
      * Возвращает максимальный уровень пользователя по всем ролям, которые у него есть
      */
     public function getUserLevel() {
-        if(empty($this->getAttribute('role_level'))){
-
-
+        if (empty($this->getAttribute('role_level'))){
             $this->dbHelper->addQuery('select_user_level', "select roles_level from V_MEMBER_ROLE where id_member = :id_member");
             $role_level = $this->dbHelper->selectValue('select_user_level', array(":id_member" => $this->getUserID()));
 
