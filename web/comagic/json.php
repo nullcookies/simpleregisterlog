@@ -51,20 +51,28 @@ try {
 		echo "Coockie not found";
 		exit();
 	}
+        
+	if (!$postData['site']) {
+		http_response_code(400);
+		echo "Site ID not found";
+		exit();
+	}        
 
 	$cp = $postData['cp'];
+        $site = $postData['site'];
 	$webo = $postData['AFFICHE_W'];
 
 	//echo $webo;
 	
 	$body .= "\r\nPost data:\r\n";
 	$body .= "CP: $cp\r\n";
-	$body .= "Webo: $webo\r\n";
+	$body .= "Site: $site\r\n";
+        $body .= "Webo: $webo\r\n";
 
 	$url = 
 		"http://comagic.solution.weborama.fr/fcgi-bin/dispatch.fcgi?" . 
 		"a.A=co&" . 
-		"a.si=5450&" . 
+		"a.si=$site&" . 
 		"a.cp=$cp&" . 
 		"a.ct=a&" . 
 		"da=1522073869&" . 
