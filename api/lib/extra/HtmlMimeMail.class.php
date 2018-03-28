@@ -1,4 +1,4 @@
-<?
+<?php
 
 class HtmlMimeMail {
   var $headers;

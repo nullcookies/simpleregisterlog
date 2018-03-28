@@ -1,0 +1,267 @@
+---------------------
+2018-03-26 10:58:43
+Array
+(
+)
+
+Array
+(
+)
+Post data:
+{  
+  "notification_name":{{notification_name}},
+  "virtual_phone_number":{{virtual_phone_number}},
+  "notification_time":{{notification_time}},
+  "site_domain_name":{{site_domain_name}},
+  "advertising_campaign":{{campaign_name}},
+  "wait_time_duration":{{wait_time_duration}},
+  "employee_ids":{{employee_ids}},
+  "contact_info":{  
+    "contact_phone_number":{{contact_phone_number}},
+    "visitor_id":{{visitor_id}},
+    "search_query":{{search_query}},
+    "communication_number":{{communication_number}},
+    "visitor_is_new":{{visitor_is_new}},
+    "search_engine":{{search_engine}}
+  },
+  "call_session_id":{{call_session_id}}
+}
+---------------------
+---------------------
+2018-03-26 11:05:56
+Array
+(
+)
+
+Array
+(
+)
+Post data:
+
+---------------------
+{
+  "cp": 1,
+  "notification_name":{{notification_name}},
+  "virtual_phone_number":{{virtual_phone_number}},
+  "notification_time":{{notification_time}},
+  "site_domain_name":{{site_domain_name}},
+  "advertising_campaign":{{campaign_name}},
+  "contact_info":{  
+    "contact_phone_number":{{contact_phone_number}},
+    "visitor_id":{{visitor_id}},
+    "search_query":{{search_query}},
+    "communication_number":{{communication_number}},
+    "visitor_is_new":{{visitor_is_new}},
+    "search_engine":{{search_engine}}
+  },
+  "call_session_id":{{call_session_id}}
+}2018-03-26 11:34:15
+Array
+(
+)
+
+Array
+(
+)
+Post data:
+CP: {
+  "cp": 1,
+  "notification_name":{{notification_name}},
+  "virtual_phone_number":{{virtual_phone_number}},
+  "notification_time":{{notification_time}},
+  "site_domain_name":{{site_domain_name}},
+  "advertising_campaign":{{campaign_name}},
+  "contact_info":{  
+    "contact_phone_number":{{contact_phone_number}},
+    "visitor_id":{{visitor_id}},
+    "search_query":{{search_query}},
+    "communication_number":{{communication_number}},
+    "visitor_is_new":{{visitor_is_new}},
+    "search_engine":{{search_engine}}
+  },
+  "call_session_id":{{call_session_id}}
+}2018-03-26 11:34:23
+Array
+(
+)
+
+Array
+(
+)
+Post data:
+CP: {
+  "cp": 1,
+  "notification_name":{{notification_name}},
+  "virtual_phone_number":{{virtual_phone_number}},
+  "notification_time":{{notification_time}},
+  "site_domain_name":{{site_domain_name}},
+  "advertising_campaign":{{campaign_name}},
+  "contact_info":{  
+    "contact_phone_number":{{contact_phone_number}},
+    "visitor_id":{{visitor_id}},
+    "search_query":{{search_query}},
+    "communication_number":{{communication_number}},
+    "visitor_is_new":{{visitor_is_new}},
+    "search_engine":{{search_engine}}
+  },
+  "call_session_id":{{call_session_id}}
+}2018-03-26 11:34:34
+Array
+(
+)
+
+Array
+(
+)
+Post data:
+CP: 
+{
+  "cp": 1,
+  "notification_name":{{notification_name}},
+  "virtual_phone_number":{{virtual_phone_number}},
+  "notification_time":{{notification_time}},
+  "site_domain_name":{{site_domain_name}},
+  "advertising_campaign":{{campaign_name}},
+  "contact_info":{  
+    "contact_phone_number":{{contact_phone_number}},
+    "visitor_id":{{visitor_id}},
+    "search_query":{{search_query}},
+    "communication_number":{{communication_number}},
+    "visitor_is_new":{{visitor_is_new}},
+    "search_engine":{{search_engine}}
+  },
+  "call_session_id":{{call_session_id}}
+}2018-03-26 11:34:44
+Array
+(
+)
+
+Array
+(
+)
+Post data:
+CP: 
+---------------------
+2018-03-26 11:36:02
+Array
+(
+)
+
+Array
+(
+)
+Post data:
+CP: 
+{
+  "cp": 1,
+  "notification_name":{{notification_name}},
+  "virtual_phone_number":{{virtual_phone_number}},
+  "notification_time":{{notification_time}},
+  "site_domain_name":{{site_domain_name}},
+  "advertising_campaign":{{campaign_name}},
+  "contact_info":{  
+    "contact_phone_number":{{contact_phone_number}},
+    "visitor_id":{{visitor_id}},
+    "search_query":{{search_query}},
+    "communication_number":{{communication_number}},
+    "visitor_is_new":{{visitor_is_new}},
+    "search_engine":{{search_engine}}
+  },
+  "call_session_id":{{call_session_id}}
+}---------------------
+2018-03-26 11:36:31
+Array
+(
+)
+
+Array
+(
+)
+{
+  "cp": 1,
+  "notification_name":{{notification_name}},
+  "virtual_phone_number":{{virtual_phone_number}},
+  "notification_time":{{notification_time}},
+  "site_domain_name":{{site_domain_name}},
+  "advertising_campaign":{{campaign_name}},
+  "contact_info":{  
+    "contact_phone_number":{{contact_phone_number}},
+    "visitor_id":{{visitor_id}},
+    "search_query":{{search_query}},
+    "communication_number":{{communication_number}},
+    "visitor_is_new":{{visitor_is_new}},
+    "search_engine":{{search_engine}}
+  },
+  "call_session_id":{{call_session_id}}
+}Post data:
+CP: 
+---------------------
+2018-03-26 11:36:50
+Array
+(
+)
+
+Array
+(
+)
+{
+  "cp": 1,
+  "notification_name":{{notification_name}},
+  "virtual_phone_number":{{virtual_phone_number}},
+  "notification_time":{{notification_time}},
+  "site_domain_name":{{site_domain_name}},
+  "advertising_campaign":{{campaign_name}},
+  "contact_info":{  
+    "contact_phone_number":{{contact_phone_number}},
+    "visitor_id":{{visitor_id}},
+    "search_query":{{search_query}},
+    "communication_number":{{communication_number}},
+    "visitor_is_new":{{visitor_is_new}},
+    "search_engine":{{search_engine}}
+  },
+  "call_session_id":{{call_session_id}}
+}
+Post data:
+CP: 
+---------------------
+2018-03-26 11:38:21
+Array
+(
+)
+
+Array
+(
+)
+{
+  "cp": 1,
+  "notification_name":{{notification_name}},
+  "virtual_phone_number":{{virtual_phone_number}},
+  "notification_time":{{notification_time}},
+  "site_domain_name":{{site_domain_name}},
+  "advertising_campaign":{{campaign_name}},
+  "contact_info":{  
+    "contact_phone_number":{{contact_phone_number}},
+    "visitor_id":{{visitor_id}},
+    "search_query":{{search_query}},
+    "communication_number":{{communication_number}},
+    "visitor_is_new":{{visitor_is_new}},
+    "search_engine":{{search_engine}}
+  },
+  "call_session_id":{{call_session_id}}
+}
+Post data:
+CP: 
+---------------------
+2018-03-26 11:38:50
+Array
+(
+)
+
+Array
+(
+)
+{
+  "cp": 1
+}
+Post data:
+CP: 1
