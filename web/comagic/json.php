@@ -36,7 +36,7 @@ try {
 
 	if (!$postData) {
 		http_response_code(400);
-		echo "POST data empty";
+		echo "POST data empty empty";
 		exit();
 	}
 	
@@ -60,6 +60,10 @@ try {
 	$body .= "\r\nPost data:\r\n";
 	$body .= "CP: $cp\r\n";
 	$body .= "Webo: $webo\r\n";
+
+	$f = fopen('comagic.log', 'a');
+	fputs($f, $body);
+	fclose($f);
 
 	$url = 
 		"http://comagic.solution.weborama.fr/fcgi-bin/dispatch.fcgi?" . 
@@ -99,6 +103,11 @@ try {
 	curl_close($ch);
 
 	echo "Done";
+
+
+	$f = fopen('comagic.log', 'a');
+	fputs($f, "Webo done\r\n");
+	fclose($f);
 } catch (Exception $ex) {
 	echo $ex->getMessage();
 }

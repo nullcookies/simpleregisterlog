@@ -265,3 +265,52 @@ Array
 }
 Post data:
 CP: 1
+---------------------
+2018-03-28 15:04:10
+Array
+(
+)
+
+Array
+(
+)
+{
+  "cp": 1,
+  "AFFICHE_W": "sdsdsd"
+}
+Post data:
+CP: 1
+Webo: sdsdsd
+---------------------
+2018-03-28 15:05:14
+Array
+(
+)
+
+Array
+(
+)
+{
+  "cp": 1,
+  "AFFICHE_W": "sdsdsdsddfdfdf"
+}
+Post data:
+CP: 1
+Webo: sdsdsdsddfdfdf
+---------------------
+2018-03-28 15:06:36
+Array
+(
+)
+
+Array
+(
+)
+{
+  "cp": 1,
+  "AFFICHE_W": "sdsdsdsddfdfdf"
+}
+Post data:
+CP: 1
+Webo: sdsdsdsddfdfdf
+Webo done
