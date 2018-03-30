@@ -56,18 +56,25 @@ try {
 		http_response_code(400);
 		echo "Site ID not found";
 		exit();
-	}        
+	}
+	
+	if (!$postData['client_id']) {
+		http_response_code(400);
+		echo "Client ID not found";
+		exit();
+	}  
 
 	$cp = $postData['cp'];
-        $site = $postData['site'];
+	$site = $postData['site'];
 	$webo = $postData['AFFICHE_W'];
+	$clientId = $postData['client_id'];
 
 	//echo $webo;
 	
 	$body .= "\r\nPost data:\r\n";
 	$body .= "CP: $cp\r\n";
 	$body .= "Site: $site\r\n";
-        $body .= "Webo: $webo\r\n";
+	$body .= "Webo: $webo\r\n";
 
 	/*$f = fopen('comagic.log', 'a');
 	fputs($f, $body);
@@ -81,6 +88,7 @@ try {
 		"a.ct=a&" . 
 		"da=1522073869&" . 
 		"g.ru=&" . 
+		"client_id=$clientId&" .
 		"g.pu=simpleregisterlog";
 
 	$headers = array(
